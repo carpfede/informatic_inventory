@@ -5,7 +5,7 @@ import Login from "@/components/Login.vue";
 
 Vue.use(Router);
 
-export const router = new Router({
+const router = new Router({
   mode: "history",
   routes: [
     {
@@ -29,8 +29,10 @@ export const router = new Router({
 
 router.beforeEach((to, from, next) => {
   const currentUser = localStorage.getItem("user");
-  if (!currentUser) {
+  if (to.path !== "/login" && !currentUser) {
     next("/login");
   }
   next();
 });
+
+export default router;

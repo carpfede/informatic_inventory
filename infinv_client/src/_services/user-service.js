@@ -11,23 +11,25 @@ export const userService = {
 };
 
 async function login(username, password) {
-  const requestOptions = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username, password })
-  };
+  console.log(username);
+  console.log(password);
+  // const requestOptions = {
+  //   method: "POST",
+  //   headers: { "Content-Type": "application/json" },
+  //   body: JSON.stringify({ username, password })
+  // };
 
-  const response = await fetch(
-    `${config.apiUrl}/users/authenticate`,
-    requestOptions
-  );
-  const user = await handleResponse(response);
-  // login successful if there's a jwt token in the response
-  if (user.token) {
-    // store user details and jwt token in local storage to keep user logged in between page refreshes
-    localStorage.setItem("user", JSON.stringify(user));
-  }
-  return user;
+  // const response = await fetch(
+  //   `${config.apiUrl}/users/authenticate`,
+  //   requestOptions
+  // );
+  // const user = await handleResponse(response);
+  // // login successful if there's a jwt token in the response
+  // if (user.token) {
+  //   // store user details and jwt token in local storage to keep user logged in between page refreshes
+  //   localStorage.setItem("user", JSON.stringify(user));
+  // }
+  // return user;
 }
 
 function logout() {

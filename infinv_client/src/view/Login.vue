@@ -29,6 +29,8 @@
 </template>
 
 <script>
+import  "./src/_services/user-service.js";
+
 export default {
   data: () => ({
     user: "",
@@ -38,6 +40,11 @@ export default {
     ],
     pass: "",
     passRules: [v => !!v || "Password is required"]
-  })
+  }),
+  methods:{
+    login: function (){
+
+    }
+  }
 };
 </script>

@@ -4,19 +4,19 @@
       <v-flex xs8 sm5 md5 lg4>
         <v-card class="mt-0 pt-0">
           <v-card-title class="teal">
-            <div class="title white--text">Welcome to Informatic Inventory!</div>
+            <div class="title white--text">Bienvenido a Inventario Informático!</div>
           </v-card-title>
           <v-card-text>
             <form @submit.prevent="login">
               <v-layout row wrap>
-                <v-text-field v-model="user" label="User name" prepend-icon="fa-user" :rules="userRules"></v-text-field>
+                <v-text-field v-model="user" label="Usuario" prepend-icon="fa-user" :rules="userRules"></v-text-field>
               </v-layout>
               <v-layout row wrap>
-                <v-text-field type="password" v-model="pass" label="Password" prepend-icon="fa-lock" :rules="passRules"></v-text-field>
+                <v-text-field type="password" v-model="pass" label="Contraseña" prepend-icon="fa-lock" :rules="passRules"></v-text-field>
               </v-layout>
               <div class="text-xs-right">
                 <v-btn color="success" type="submit">
-                  Login
+                  Ingresar
                   <v-icon right>fa fa-sign-in-alt</v-icon>
                 </v-btn>
               </div>
@@ -29,21 +29,19 @@
 </template>
 
 <script>
-import  "./src/_services/user-service.js";
-
 export default {
   data: () => ({
     user: "",
-    userRules: [
-      v => !!v || "Name is required",
-      v => v.length <= 10 || "Name must be less than 10 characters"
-    ],
+    userRules: [v => !!v || "El nombre es requerido"],
     pass: "",
-    passRules: [v => !!v || "Password is required"]
+    passRules: [v => !!v || "La contraseña es requerida"]
   }),
-  methods:{
-    login: function (){
-
+  created() {
+    this.userService = this.$store.state.services.userService;
+  },
+  methods: {
+    login: function() {
+      this.userService.getAll();
     }
   }
 };

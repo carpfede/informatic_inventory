@@ -1,26 +1,28 @@
-# invinf_cliente
+# Bienvenido a Inventario Informático.
 
-## Project setup
+Un sistema en el cual podrás llevar un registro con todos los equipos que posee tu empresa para que puedas tener un control del equipamiento, como así también cuál es el capital con el contas.
+Algunas de las funcionalidades de este sistema son:
+
+- Gestión de usuarios
+- Gestión de equipos
+- Reportes
+
+Manual de uso:
+
+## Configuración del proyecto
+
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### Compilación para desarrolladores
+
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+### Compilación para producción
+
 ```
 npm run build
-```
-
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
 ```

@@ -1,6 +1,6 @@
 const config = [
   {
-    baseUrl: "test"
+    baseUrl: "http://localhost:3000"
   }
 ];
 

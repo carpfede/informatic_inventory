@@ -19,6 +19,7 @@
   "devDependencies": {
     "@babel/cli": "^7.1.2",
     "@babel/core": "^7.1.2",
+    "@types/jasmine": "^2.8.11",
     "@vue/cli-plugin-babel": "^3.0.5",
     "@vue/cli-plugin-eslint": "^3.0.5",
     "@vue/cli-service": "^3.0.5",

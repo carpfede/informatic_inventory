@@ -7,7 +7,8 @@ class userService {
   }
 
   singIn() {
-    alert(this.baseUrl);
+    this.axios.get(this.baseUrl + '/users').then(response => this.tt = response);
+    alert(this.tt);
   }
 }
 

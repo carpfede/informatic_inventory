@@ -6,9 +6,9 @@ class userService {
     this.baseUrl = config.baseUrl;
   }
 
-  singIn() {
-    this.axios.get(this.baseUrl + '/users').then(response => this.tt = response);
-    alert(this.tt);
+  async singIn() {
+    let tt = await this.axios.get(`${this.baseUrl}auth`).then(response => this.tt = response);
+    alert(tt);
   }
 }
 

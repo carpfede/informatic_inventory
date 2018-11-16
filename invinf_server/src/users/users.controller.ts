@@ -14,6 +14,7 @@ export class UsersController {
 
     @Get()
     async findAll(): Promise<UserInterface[]> {
+        alert('test');
         return this.usersService.findAll();
     }
 }

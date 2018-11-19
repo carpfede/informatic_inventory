@@ -24,10 +24,10 @@ import { authenticate } from 'passport';
 export class AuthModule implements NestModule {
   public configure(consumer: MiddlewareConsumer) {
     consumer
-      .apply([
+      .apply(
         bodyValidatorMiddleware,
         authenticate('local', { session: false }),
-      ])
+      )
       .forRoutes('auth/login');
   }
 }

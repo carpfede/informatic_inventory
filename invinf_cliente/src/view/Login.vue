@@ -41,7 +41,7 @@ export default {
   },
   methods: {
     login: function() {
-      this.userService.singIn();
+      this.userService.singIn(this.user,this.pass);
     }
   }
 };

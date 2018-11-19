@@ -7,8 +7,28 @@ class userService {
   }
 
   async singIn() {
-    let tt = await this.axios.get(`${this.baseUrl}auth`).then(response => this.tt = response);
-    alert(tt);
+    //let tt = await this.axios.get(`${this.baseUrl}auth`).then(response => this.tt = response);
+    const user = {
+      "firstName":"fede",
+      "lastName":"fede",
+      "email":"fede@hotmail.com",
+      "password":"123Pablo"
+    } 
+    let reg = await this.axios.post(`${this.baseUrl}auth/register`,user);
+      //.then(response => this.reg = response);
+    alert(reg);
+  }
+
+  async singn(user,pass) {
+    let logIn = {
+      "email": user,
+      "password": pass
+    };
+    let reg = await this.axios.post(`${this.baseUrl}auth/login`,logIn);
+
+      //.then(response => this.reg = response);
+    // eslint-disable-next-line no-console
+    console.log("hola",reg);
   }
 }
 

@@ -20,7 +20,7 @@ export class AuthController {
   constructor(
     private readonly authService: AuthService,
     private readonly usersService: UsersService,
-  ) {}
+  ) { }
 
   @Post('register')
   public async register(@Response() res, @Body() createUserDto: CreateUserDto) {
@@ -29,14 +29,13 @@ export class AuthController {
       return res.status(HttpStatus.BAD_REQUEST).json(result);
     }
     return res.status(HttpStatus.OK).json(result);
-    
   }
 
   @Post('login')
-  @UseGuards(AuthGuard('local'))
+  @UseGuards(AuthGuard('jwt'))
   public async login(@Response() res, @Body() login: LoginUserDto) {
     return await this.usersService
-      .findOne({ username: login.email })
+      .findOne({ username: login.userName })
       .then(user => {
         if (!user) {
           res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({

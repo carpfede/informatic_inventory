@@ -15,27 +15,27 @@ export class AuthService {
     @InjectModel('User') private readonly userModel: PassportLocalModel<IUser>,
   ) {}
 
-  async register(user: IUser) {
-    let status: RegistrationStatus = {
-      success: true,
-      message: 'user register',
-    };
-    await this.userModel.register(
-      new this.userModel({
-        username: user.email,
-        firstName: user.firstName,
-        lastName: user.lastName,
-      }),
-      user.password,
-      err => {
-        if (err) {
-          debug(err);
-          status = { success: false, message: err };
-        }
-      },
-    );
-    return status;
-  }
+  // async register(user: IUser) {
+  //   let status: RegistrationStatus = {
+  //     success: true,
+  //     message: 'user register',
+  //   };
+  //   await this.userModel.register(
+  //     new this.userModel({
+  //       username: user.email,
+  //       firstName: user.firstName,
+  //       lastName: user.lastName,
+  //     }),
+  //     user.password,
+  //     err => {
+  //       if (err) {
+  //         debug(err);
+  //         status = { success: false, message: err };
+  //       }
+  //     },
+  //   );
+  //   return status;
+  // }
 
   createToken(user) {
     // tslint:disable-next-line:no-console
@@ -49,7 +49,7 @@ export class AuthService {
     const accessToken = jwt.sign(
       {
         id: user.id,
-        email: user.username,
+        userName: user.username,
         firstname: user.firstName,
         lastname: user.lastName,
       },
@@ -63,6 +63,6 @@ export class AuthService {
     return { expiresIn, accessToken };
   }
   async validateUser(payload: JwtPayload): Promise<any> {
-    return await this.usersService.findById(payload.id);
+    return await this.usersService.findByUserName(payload.userName);
   }
 }

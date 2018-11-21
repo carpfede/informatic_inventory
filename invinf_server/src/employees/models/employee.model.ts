@@ -1,6 +1,8 @@
-import { Typegoose, prop } from 'typegoose';
+import { Typegoose, prop, plugin } from 'typegoose';
 import * as mongoose from 'mongoose';
+import * as uniqueValidator from 'mongoose-unique-validator';
 
+@plugin(uniqueValidator)
 export class Employee extends Typegoose {
     @prop({ required: true })
     firstName: string;
@@ -8,18 +10,17 @@ export class Employee extends Typegoose {
     @prop({ required: true })
     lastName: string;
 
-    @prop({ required: true })
+    @prop({ required: true, unique: true })
     email: string;
 
     @prop()
     birthday: Date;
 
     @prop({ required: true, unique: true })
-    docket: number;
+    idNumber: number;
 }
 
 export const EmployeeModel = new Employee().getModelForClass(Employee, {
     existingMongoose: mongoose,
-    existingConnection: mongoose.connection,
     schemaOptions: { collection: 'employees' },
 });

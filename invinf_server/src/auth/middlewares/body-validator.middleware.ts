@@ -1,7 +1,7 @@
 import { MiddlewareFunction, BadRequestException } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { validate } from 'joi';
-import { authUserSchema } from '../../users/joi/auth-user.joi';
+import { authUserSchema } from '../joi/auth-user.joi';
 
 export const bodyValidatorMiddleware: MiddlewareFunction =
   // tslint:disable-next-line:ban-types

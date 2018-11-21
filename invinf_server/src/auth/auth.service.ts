@@ -3,17 +3,10 @@ import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtPayload } from './interfaces/jwt-payload.interface';
 import { Model, PassportLocalModel } from 'mongoose';
-import { IUser } from '../users/interfaces/user.interface';
 import { InjectModel } from '@nestjs/mongoose';
-import { debug } from 'console';
-import { RegistrationStatus } from './interfaces/registrationStatus.interface';
 
 @Injectable()
 export class AuthService {
-  constructor(
-    private readonly usersService: UsersService,
-    @InjectModel('User') private readonly userModel: PassportLocalModel<IUser>,
-  ) {}
 
   // async register(user: IUser) {
   //   let status: RegistrationStatus = {
@@ -63,6 +56,6 @@ export class AuthService {
     return { expiresIn, accessToken };
   }
   async validateUser(payload: JwtPayload): Promise<any> {
-    return await this.usersService.findByUserName(payload.userName);
+    // return await this.usersService.findByUserName(payload.userName);
   }
 }

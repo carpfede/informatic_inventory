@@ -2,6 +2,9 @@
   <v-app>
     <v-container fill-height justify-center align-center>
       <v-flex xs8 sm5 md5 lg4>
+        <v-alert v-model="alert" type="error" v-for="e in errors" v-bind:key="e.path">
+          {{e.message}}
+        </v-alert>
         <v-card class="mt-0 pt-0">
           <v-card-title class="teal">
             <div class="title white--text">Bienvenido a Inventario Informático!</div>
@@ -34,14 +37,18 @@ export default {
     user: "",
     userRules: [v => !!v || "El nombre es requerido"],
     pass: "",
-    passRules: [v => !!v || "La contraseña es requerida"]
+    passRules: [v => !!v || "La contraseña es requerida"],
+    errors: [],
+    alert: false
   }),
   created() {
     this.userService = this.$store.state.services.userService;
   },
   methods: {
-    login: function() {
-      this.userService.singIn(this.user,this.pass);
+    login: async function() {
+      this.errors = await this.userService.singIn(this.user, this.pass);
+      this.alert = _.some(this.errors);
+      console.log("view", this.errors);
     }
   }
 };

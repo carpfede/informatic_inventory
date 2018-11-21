@@ -8,40 +8,45 @@ class userService {
     this.baseUrl = config.baseUrl;
   }
 
-  async singIn() {
-    //let tt = await this.axios.get(`${this.baseUrl}auth`).then(response => this.tt = response);
-    let employee = {
-      "firstName": "fede",
-      "lastName": "fede",
-      "email": "fede@hotmail.com",
-      "idNumber": 1234
-    }
-    let tt = await this.axios.post(`${this.baseUrl}employees/create`, employee);
-
-    // eslint-disable-next-line no-console
-    console.log(tt);
-
-    if (this.lodash.size(tt.data.errors) > 0)
-      return;
-
-    const createdEmployee = tt.data.employee;
-
-    // eslint-disable-next-line no-console
-    console.log(createdEmployee)
-    const user = {
-      "userName": employee.idNumber,
-      "password": 'default123456',
-      "employee": createdEmployee
-    }
-
-    let t = await this.axios.post(`${this.baseUrl}users/create`, user);
-
-    // eslint-disable-next-line no-console
-    console.log('hola', tt);
-    // eslint-disable-next-line no-console
-    console.log('hola', t);
-
+  async singIn(username, password){
+    
   }
+  // async singIn() {
+  //   //let tt = await this.axios.get(`${this.baseUrl}auth`).then(response => this.tt = response);
+  //   let employee = {
+  //     "firstName": "fede",
+  //     "lastName": "fede",
+  //     "email": "fede@hotmail.com",
+  //     "idNumber": 1234
+  //   }
+  //   let tt = await this.axios.post(`${this.baseUrl}employees/create`, employee);
+
+  //   // eslint-disable-next-line no-console
+  //   console.log(tt);
+
+  //   if (this.lodash.size(tt.data.errors) > 0)
+  //   {
+  //     return tt.data.errors;
+  //   }
+
+  //   const createdEmployee = tt.data.employee;
+
+  //   // eslint-disable-next-line no-console
+  //   console.log(createdEmployee)
+  //   const user = {
+  //     "userName": employee.idNumber,
+  //     "password": 'default123456',
+  //     "employee": createdEmployee
+  //   }
+
+  //   let t = await this.axios.post(`${this.baseUrl}users/create`, user);
+
+  //   // eslint-disable-next-line no-console
+  //   console.log('hola', tt);
+  //   // eslint-disable-next-line no-console
+  //   console.log('hola', t);
+
+  // }
 }
 
 export default userService;

@@ -31,23 +31,23 @@ export class AuthController {
   }
 
   @Post('login')
-  @UseGuards(AuthGuard('jwt'))
+  // @UseGuards(AuthGuard('jwt'))
   public async login(@Response() res, @Body() login: LoginUserDto) {
-    // return await this.usersService
-    //   .findOne({ username: login.userName })
-    //   .then(user => {
-    //     if (!user) {
-    //       res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
-    //         message: 'User Not Found',
-    //       });
-    //     } else {
-    //       // tslint:disable-next-line:no-console
-    //       console.log('start getting the token');
-    //       const token = this.authService.createToken(user);
-    //       // tslint:disable-next-line:no-console
-    //       console.log(token);
-    //       return res.status(HttpStatus.OK).json(token);
-    //     }
-    //   });
+    return await this.usersService
+      .findOne({ username: login.userName })
+      .then(user => {
+        if (!user) {
+          res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+            message: 'User Not Found',
+          });
+        } else {
+          // tslint:disable-next-line:no-console
+          console.log('start getting the token');
+          const token = this.authService.createToken(user);
+          // tslint:disable-next-line:no-console
+          console.log(token);
+          return res.status(HttpStatus.OK).json(token);
+        }
+      });
   }
 }

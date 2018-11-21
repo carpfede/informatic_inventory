@@ -13,4 +13,8 @@ export class UsersService {
             return new CreateUserResponse(null, errors.errors);
         }
     }
+
+    async findOne(arg0: { username: string; }): Promise<CreateUserResponse> {
+        throw new Error("Method not implemented.");
+      }
 }

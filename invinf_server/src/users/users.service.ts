@@ -1,50 +1,16 @@
-import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { debug } from 'console';
-import { IUsersService } from './interfaces/iusers.service';
-import { IUser } from './interfaces/user.interface';
-import { CreateUserDto } from './dto/createUser.dto';
+import { User, UserModel } from './models/user.model';
+import { CreateUserResponse } from './dtos/createUserResponse';
 
 @Injectable()
-export class UsersService implements IUsersService {
-  constructor(
-    @InjectModel('User') private readonly userModel: Model<IUser>,
-  ) { }
-  async findAll(): Promise<IUser[]> {
-    return await this.userModel.find().exec();
-  }
-
-  async findOne(options: object): Promise<IUser> {
-    return await this.userModel.findOne(options).exec();
-  }
-
-  async findByUserName(userName: string): Promise<IUser> {
-    return await this.userModel.findById(userName).exec();
-  }
-
-  async create(createUserDto: CreateUserDto): Promise<IUser> {
-    const createdUser = new this.userModel(createUserDto);
-    return await createdUser.save();
-  }
-
-  async update(ID: number, newValue: IUser): Promise<IUser> {
-    const user = await this.userModel.findById(ID).exec();
-
-    if (!user._id) {
-      debug('user not found');
+export class UsersService {
+    async create(createUser: User): Promise<CreateUserResponse> {
+        try {
+            const createdUser = new UserModel(createUser);
+            await createdUser.save();
+            return new CreateUserResponse(createdUser);
+        } catch (errors) {
+            return new CreateUserResponse(null, errors.errors);
+        }
     }
-
-    await this.userModel.findByIdAndUpdate(ID, newValue).exec();
-    return await this.userModel.findById(ID).exec();
-  }
-  async delete(ID: number): Promise<string> {
-    try {
-      await this.userModel.findByIdAndRemove(ID).exec();
-      return 'The user has been deleted';
-    } catch (err) {
-      debug(err);
-      return 'The user could not be deleted';
-    }
-  }
 }

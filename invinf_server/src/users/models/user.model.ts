@@ -1,7 +1,9 @@
-import { Typegoose, prop } from 'typegoose';
+import { Typegoose, prop, plugin } from 'typegoose';
 import { Employee } from 'src/employees/models/employee.model';
 import * as mongoose from 'mongoose';
+import * as uniqueValidator from 'mongoose-unique-validator';
 
+@plugin(uniqueValidator)
 export class User extends Typegoose {
     @prop({ unique: true, required: true })
     userName: string;
@@ -9,8 +11,8 @@ export class User extends Typegoose {
     @prop({ required: true })
     password: string;
 
-    @prop({ ref: Employee, required: true })
-    employee: Employee;
+    @prop({ ref: Employee, required: true, unique: true })
+    employee_id: Employee;
 }
 
 export const UserModel = new User().getModelForClass(User, {

@@ -5,7 +5,9 @@ import services from "./service";
 Vue.use(Vuex);
 
 const state = {
-  services
+  services,
+  systemTitle: 'Inventario Informático',
+  systemDescription: 'Gestión de equipos informáticos para control de stock'
 };
 
 export default new Vuex.Store({

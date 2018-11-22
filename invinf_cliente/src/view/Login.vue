@@ -3,14 +3,14 @@
     <v-container fill-height justify-center align-center>
       <v-flex xs8 sm5 md5 lg4>
         <v-alert v-model="alert" type="error" v-for="e in errors" v-bind:key="e.path">
-          {{e.message}}
+          {{e}}
         </v-alert>
         <v-card class="mt-0 pt-0">
           <v-card-title class="teal">
             <div class="title white--text">Bienvenido a Inventario Informático!</div>
           </v-card-title>
           <v-card-text>
-            <form @submit.prevent="login">
+            <v-form ref="form" lazy-validation @submit.prevent="login">
               <v-layout row wrap>
                 <v-text-field v-model="user" label="Usuario" prepend-icon="fa-user" :rules="userRules"></v-text-field>
               </v-layout>
@@ -23,7 +23,7 @@
                   <v-icon right>fa fa-sign-in-alt</v-icon>
                 </v-btn>
               </div>
-            </form>
+            </v-form>
           </v-card-text>
         </v-card>
       </v-flex>
@@ -32,6 +32,8 @@
 </template>
 
 <script>
+import router from "../router";
+
 export default {
   data: () => ({
     user: "",
@@ -46,9 +48,14 @@ export default {
   },
   methods: {
     login: async function() {
-      this.errors = await this.userService.singIn(this.user, this.pass);
-      this.alert = _.some(this.errors);
-      console.log("view", this.errors);
+      if (this.$refs.form.validate()) {
+        this.errors = await this.userService.logIn(this.user, this.pass);
+        if (_.some(this.errors)) {
+          this.alert = true;
+        } else {
+          router.push({ name: "home" });
+        }
+      }
     }
   }
 };

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Employee, EmployeeModel } from './models/employee.model';
-import { CreateEmployeeResponse } from './dtos/createEmployeeResponse';
+import { CreateEmployeeResponse } from './dtos/createEmployeeResponse.dto';
 
 @Injectable()
 export class EmployeesService {

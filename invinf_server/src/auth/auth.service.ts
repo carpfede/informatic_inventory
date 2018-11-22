@@ -8,28 +8,6 @@ import { InjectModel } from '@nestjs/mongoose';
 @Injectable()
 export class AuthService {
 
-  // async register(user: IUser) {
-  //   let status: RegistrationStatus = {
-  //     success: true,
-  //     message: 'user register',
-  //   };
-  //   await this.userModel.register(
-  //     new this.userModel({
-  //       username: user.email,
-  //       firstName: user.firstName,
-  //       lastName: user.lastName,
-  //     }),
-  //     user.password,
-  //     err => {
-  //       if (err) {
-  //         debug(err);
-  //         status = { success: false, message: err };
-  //       }
-  //     },
-  //   );
-  //   return status;
-  // }
-
   createToken(user) {
     // tslint:disable-next-line:no-console
     console.log('get the expiration');

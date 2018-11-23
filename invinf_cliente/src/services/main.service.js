@@ -10,10 +10,9 @@ class mainService {
 
     findMenu() {
         return [
-            { 'header': 'Admin' },
             { 'href': '/', 'title': 'Home', 'icon': 'home' },
             { 'href': '/equipos', 'title': 'Equipos', 'icon': 'fas fa-desktop' },
-            { 'href': '/cambios', 'title': 'Cambio', 'icon': 'view_list' },
+            { 'href': '/cambios', 'title': 'Cambios', 'icon': 'view_list' },
             { 'href': '/reportes', 'title': 'Reportes', 'icon': 'far fa-file-alt' },
             { 'href': '/empleados', 'title': 'Empleados', 'icon': 'fas fa-users' },
         ]

@@ -1,4 +1,4 @@
-export class CreateEmployeeResponse {
+export class EmployeeResponse {
     employee: any;
     errors: [];
 

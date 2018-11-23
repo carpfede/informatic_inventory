@@ -2,10 +2,10 @@ class userService {
   axios;
   lodash;
   baseUrl;
-  constructor(axios, config, lodash) {
+  constructor(axios, baseUrl, lodash) {
     this.axios = axios;
     this.lodash = lodash;
-    this.baseUrl = config.baseUrl;
+    this.baseUrl = baseUrl;
   }
 
   async logIn(user, pass) {

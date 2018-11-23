@@ -1,30 +1,28 @@
+import * as passport from 'passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
+import { Injectable } from '@nestjs/common';
 import { AuthService } from '../auth.service';
-import { PassportStrategy } from '@nestjs/passport';
-import { Request } from 'express';
-import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { JwtPayload } from '../interfaces/jwt-payload.interface';
 
 @Injectable()
-export class JwtStrategy extends PassportStrategy(Strategy) {
+export class JwtStrategy extends Strategy {
   constructor(private readonly authService: AuthService) {
     super(
       {
         jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-        secretOrKey: 'ILovePokemon',
+        passReqToCallback: true,
+        secretOrKey: 'secret',
       },
-      // tslint:disable-next-line:ban-types
-      async (req: Request, payload: any, next: Function) =>
-        await this.validate(req, payload, next),
+      async (req, payload, next) => await this.verify(req, payload, next),
     );
+    passport.use(this);
   }
 
-  // tslint:disable-next-line:ban-types
-  async validate(req: Request, payload: JwtPayload, done: Function) {
-    const user = await this.authService.validateUser(payload);
-    if (!user) {
-      return done(new UnauthorizedException(), false);
+  public async verify(req, payload, done) {
+    console.log('veery');
+    const isValid = await this.authService.validateUser(payload);
+    if (!isValid) {
+      return done('Unauthorized', false);
     }
-    done(null, user);
+    done(null, payload);
   }
 }

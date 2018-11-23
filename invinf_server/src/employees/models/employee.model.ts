@@ -18,6 +18,9 @@ export class Employee extends Typegoose {
 
     @prop({ required: true, unique: true })
     idNumber: number;
+
+    @prop()
+    telephone: number;
 }
 
 export const EmployeeModel = new Employee().getModelForClass(Employee, {

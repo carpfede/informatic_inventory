@@ -1,17 +1,44 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException } from '@nestjs/common';
 import { Employee, EmployeeModel } from './models/employee.model';
-import { CreateEmployeeResponse } from './dtos/createEmployeeResponse.dto';
+import { EmployeeResponse } from './dtos/employee.response.dto';
+import mongoose from 'mongoose';
 
 @Injectable()
 export class EmployeesService {
+    async lastIdNumber(): Promise<number> {
+        try {
+            const employee = await EmployeeModel.findOne().sort({ field: 'asc', _id: -1 });
+            return employee.idNumber;
+        } catch (errors) {
+            return null;
+        }
+    }
 
-    async create(createEmployee: Employee): Promise<CreateEmployeeResponse> {
+    async findAll(): Promise<EmployeeResponse> {
+        try {
+            const employees = await EmployeeModel.find();
+            return new EmployeeResponse(employees);
+        } catch (errors) {
+            return new EmployeeResponse(null, errors);
+        }
+    }
+
+    async create(createEmployee: Employee): Promise<EmployeeResponse> {
         try {
             const createdEmployee = new EmployeeModel(createEmployee);
             await createdEmployee.save();
-            return new CreateEmployeeResponse(createdEmployee);
+            return new EmployeeResponse(createdEmployee);
         } catch (errors) {
-            return new CreateEmployeeResponse(null, errors.errors);
+            return new EmployeeResponse(null, errors.errors);
+        }
+    }
+
+    async findById(id: mongoose.Types.ObjectId): Promise<EmployeeResponse> {
+        try {
+            const employee = await EmployeeModel.findById(id);
+            return new EmployeeResponse(employee);
+        } catch (errors) {
+            return new EmployeeResponse(null, errors.errors);
         }
     }
 }

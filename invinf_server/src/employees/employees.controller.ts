@@ -30,7 +30,7 @@ export class EmployeesController {
     }
 
     @Get('/findAll')
-    @UseGuards(AuthGuard('jwt'))
+    // @UseGuards(AuthGuard('jwt'))
     public async findAll(): Promise<EmployeeResponse> {
         const result = this.employeesService.findAll();
         return await result;

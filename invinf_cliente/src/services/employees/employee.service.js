@@ -6,14 +6,12 @@ class equipeService {
         this.axios = axios;
         this.lodash = lodash;
         this.baseUrl = baseUrl;
-        this.authToken = JSON.parse(localStorage.getItem('user')).token.accessToken;
-
     }
 
     async findAll() {
-        console.log(this.authToken);
+        const authToken = JSON.parse(localStorage.getItem('user')).token.accessToken;
         const token = {
-            'Authorization': 'Bearer' + this.authToken
+            'Authorization': 'Bearer' + authToken
         }
         const response = await this.axios.get(`${this.baseUrl}employees/findAll`, { params: token });
         return response;

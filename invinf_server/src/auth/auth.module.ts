@@ -1,31 +1,22 @@
 import { Module, MiddlewareConsumer, NestModule, RequestMethod } from '@nestjs/common';
-import { JwtModule } from '@nestjs/jwt';
 import * as passport from 'passport';
 
+//imports
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { UsersModule } from '../users/users.module';
-// Strategies
-import { JwtStrategy } from './passport/jwt.strategy';
-import { PassportModule } from '@nestjs/passport';
 import { EmployeesModule } from 'src/employees/employees.module';
 
+// Bearer auth
+import { AppAuthGuard } from './guards/appAuth.guard';
+import { HttpStrategy } from './passport/http.strategy';
+import { CookieSerializer } from './dto/cookie-serializer';
+
 @Module({
-  imports: [UsersModule, EmployeesModule, PassportModule.register({ defaultStrategy: 'jwt' }),
-    JwtModule.register({
-      secretOrPrivateKey: 'secretKey',
-      signOptions: {
-        expiresIn: 3600,
-      },
-    }),
-  ],
+  imports: [UsersModule, EmployeesModule, HttpStrategy, AppAuthGuard, CookieSerializer],
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy],
-  exports: [AuthService, JwtStrategy],
+  providers: [AuthService],
+  exports: [AuthService],
 })
-export class AuthModule implements NestModule {
-  public configure(consumber: MiddlewareConsumer) {
-    consumber.apply(passport.authenticate('jwt', { session: false }))
-      .forRoutes({ path: '/users', method: RequestMethod.ALL });
-  }
-}
+export class AuthModule { }
+

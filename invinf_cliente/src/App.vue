@@ -103,7 +103,7 @@ export default {
     },
     bienvenida() {
       const user = JSON.parse(localStorage.getItem("user"));
-      return user ? `Bienvenido ${user.name}` : "";
+      return user ? `Bienvenido ${user.firstName}` : "";
     },
     title() {
       const tit = this.$route.meta.title;

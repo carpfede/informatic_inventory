@@ -1,10 +1,12 @@
-import { Injectable, HttpException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Employee, EmployeeModel } from './models/employee.model';
 import { EmployeeResponse } from './dtos/employee.response.dto';
 import mongoose from 'mongoose';
+import { ObjectId } from 'mongodb';
 
 @Injectable()
 export class EmployeesService {
+
     async lastIdNumber(): Promise<number> {
         try {
             const employee = await EmployeeModel.findOne().sort({ field: 'asc', _id: -1 });
@@ -39,6 +41,23 @@ export class EmployeesService {
             return new EmployeeResponse(employee);
         } catch (errors) {
             return new EmployeeResponse(null, errors.errors);
+        }
+    }
+
+    async update(id: string, employee: Employee): Promise<EmployeeResponse> {
+        try {
+            await EmployeeModel.update({ _id: new ObjectId(id) }, employee);
+            return new EmployeeResponse();
+        } catch (error) {
+            return new EmployeeResponse(null, error.errors);
+        }
+    }
+
+    delete(id: mongoose.Types.ObjectId): EmployeeResponse {
+        try {
+            EmployeeModel.deleteOne(id);
+        } catch (error) {
+            return new EmployeeResponse(null, error.errors);
         }
     }
 }

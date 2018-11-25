@@ -4,13 +4,18 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store/index";
 import axios from "axios";
+import HttpStatus from './config/httpStatus'
 
 axios.interceptors.response.use(null, function (error) {
-  if (error.response.status === 401) {
-    localStorage.removeItem('token');
-    router.push({name: "404"})
+  const status = error.response.status;
+
+  if (status === HttpStatus.UNAUTHORIZED)
+    return router.push({ name: '401' })
+  if (status === HttpStatus.NOT_FOUND)
+    return router.push({ name: '404' })
+  if (status === HttpStatus.INTERNAL_SERVER_ERROR) {
+    return router.push({ name: '500' })
   }
-  return Promise.reject(error.response);
 });
 
 Vue.config.productionTip = false;

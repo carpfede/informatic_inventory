@@ -2,9 +2,11 @@
   <v-app>
     <v-container fill-height justify-center align-center>
       <v-flex xs8 sm5 md5 lg4>
-        <v-alert v-model="alert" type="error" v-for="e in errors" v-bind:key="e.path">
-          {{e}}
-        </v-alert>
+        <v-layout row wrap v-for="e in errors" v-bind:key="e.path" fill>
+          <v-alert v-model="alert" type="error" @click="removeError(e)">
+            {{e}}
+          </v-alert>
+        </v-layout>
         <v-card class="mt-0 pt-0">
           <v-card-title class="teal">
             <div class="title white--text">Bienvenido a Inventario Informático!</div>
@@ -54,9 +56,12 @@ export default {
         if (_.some(this.errors)) {
           this.alert = true;
         } else {
-          router.push({ name: "home" });
+          router.push({ name: "Home" });
         }
       }
+    },
+    removeError(e) {
+      this.errors = _.filter(this.errors, error => error !== e);
     }
   }
 };

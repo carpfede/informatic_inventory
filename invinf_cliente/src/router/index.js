@@ -17,13 +17,39 @@ const router = new Router({
       )
     },
     {
-      path: '/error',
+      path: '/error/autorizacion',
+      meta: {
+        public: true,
+      },
+      name: '401',
+      component: () => import(
+        `@/view/errors/401.vue`
+      )
+    },
+    {
+      path: '*',
+      redirect: {
+        name: '404'
+      }
+    },
+    {
+      path: '/error/archivos',
       meta: {
         public: true,
       },
       name: '404',
       component: () => import(
-        `@/view/404.vue`
+        `@/view/errors/404.vue`
+      )
+    },
+    {
+      path: '/error/server',
+      meta: {
+        public: true,
+      },
+      name: '500',
+      component: () => import(
+        `@/view/errors/500.vue`
       )
     },
     {
@@ -86,6 +112,10 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
+  if (to.path === '/login') {
+    localStorage.clear();
+  }
+
   const currentUser = localStorage.getItem("user");
   if (to.path !== "/login" && !currentUser) {
     next("/login");

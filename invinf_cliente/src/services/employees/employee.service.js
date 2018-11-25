@@ -1,3 +1,5 @@
+import config from "../../config/config";
+
 class equipeService {
     axios;
     lodash;
@@ -9,11 +11,7 @@ class equipeService {
     }
 
     async findAll() {
-        const authToken = JSON.parse(localStorage.getItem('user')).token.accessToken;
-        const token = {
-            'Authorization': 'Bearer' + authToken
-        }
-        const response = await this.axios.get(`${this.baseUrl}employees/findAll`, { params: token });
+        const response = await this.axios.get(`${this.baseUrl}employees/findAll`, { headers: config.token });
         return response;
     }
 
@@ -25,6 +23,10 @@ class equipeService {
     async getLastIdNumber() {
         const response = await this.axios.get(`${this.baseUrl}employees/lastIdNumber`);
         return response;
+    }
+
+    async find(filter){
+        
     }
 }
 

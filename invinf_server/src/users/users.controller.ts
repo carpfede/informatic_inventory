@@ -2,7 +2,7 @@ import { Controller, Get, UseGuards, Post, Response, Body, HttpStatus } from '@n
 import { User } from './models/user.model';
 import { UsersService } from './users.service';
 import { ApiResponse } from '@nestjs/swagger';
-import { LoginResponse } from 'src/auth/dto/login-response.dto';
+import { LoginResponse } from 'src/auth/dto/loginResponse.dto';
 import { LoginModel } from 'src/auth/dto/login.dto';
 
 @Controller('users')
@@ -18,6 +18,8 @@ export class UsersController {
 
     @Post('login')
     public async login(@Body() req: LoginModel): Promise<LoginResponse> {
-        return this.usersService.login(req)
+        const res = await this.usersService.login(req)
+
+        return new LoginResponse(res.user.token, res.user.userName, res.user.firstName, res.errors);
     }
 }

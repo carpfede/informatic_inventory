@@ -12,6 +12,9 @@ const config =
       const pattern = /^(0|[1-9][0-9]*)$/;
       return pattern.test(value) || "Solo números."
     }
+  },
+  token: {
+    Authorization: JSON.parse(localStorage.getItem('user')) ? `Bearer ${JSON.parse(localStorage.getItem('user')).token}` : ''
   }
 };
 

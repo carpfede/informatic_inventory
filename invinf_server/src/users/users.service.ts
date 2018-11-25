@@ -2,9 +2,10 @@ import { Injectable, HttpException, HttpStatus, Inject, forwardRef } from '@nest
 import { User, UserModel } from './models/user.model';
 import { CreateUserResponse } from './dtos/createUserResponse.dto';
 import { LoginModel } from 'src/auth/dto/login.dto';
-import { LoginResponse } from 'src/auth/dto/login-response.dto';
+import { LoginResponse } from 'src/auth/dto/loginResponse.dto';
 import { AuthService } from 'src/auth/auth.service';
 import { JwtPayload } from 'src/auth/jwt-payload';
+import { EmployeeModel } from 'src/employees/models/employee.model';
 
 @Injectable()
 export class UsersService {
@@ -22,14 +23,16 @@ export class UsersService {
         }
     }
 
-    async login(loginDto: LoginModel): Promise<LoginResponse> {
+    async login(loginDto: LoginModel): Promise<CreateUserResponse> {
         const { username, pass } = loginDto;
 
         const user = await UserModel.findOne({ userName: username })
 
         if (!user || user.password !== pass) {
-            throw new HttpException('Credenciales invalidas', HttpStatus.BAD_REQUEST);
+            return new CreateUserResponse(null, ['Credenciales invalidas']);
         }
+
+        const employee = await EmployeeModel.findById(user.employee_id);
 
         const payload: JwtPayload = {
             userName: user.userName,
@@ -38,10 +41,13 @@ export class UsersService {
 
         const token = await this.authService.signPayload(payload);
 
-        return {
+        const response = {
             token: token,
-            user: user.toJSON() as User
+            userName: user.userName,
+            firstName: employee.firstName
         }
+
+        return new CreateUserResponse(response);
     }
 
     async findOne(filter: {}): Promise<CreateUserResponse> {

@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Response, HttpStatus, Get, UseGuards } from '@nestjs/common';
+import { Controller, Post, Body, Response, HttpStatus, Get, UseGuards, Query } from '@nestjs/common';
 import { Employee } from './models/employee.model';
 import { EmployeesService } from './employees.service';
 import * as _ from 'lodash';
@@ -15,7 +15,7 @@ export class EmployeesController {
     ) { }
 
     @Post('create')
-    // @UseGuards(AuthGuard('jwt'))
+    @UseGuards(AuthGuard('jwt'))
     public async create(@Response() res, @Body() createEmployee: Employee) {
         const result = await this.employeesService.create(createEmployee);
         if (!_.some(result.errors)) {
@@ -37,8 +37,16 @@ export class EmployeesController {
     }
 
     @Get('/lastIdNumber')
+    @UseGuards(AuthGuard('jwt'))
     public async lastIdNumber(): Promise<number> {
         const result = this.employeesService.lastIdNumber();
         return await result;
+    }
+
+    @Post('/edit')
+    @UseGuards(AuthGuard('jwt'))
+    public async edit(@Body() req): Promise<EmployeeResponse> {
+        const result = this.employeesService.update(req.id, req.employee);
+        return result;
     }
 }

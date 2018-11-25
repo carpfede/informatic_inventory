@@ -44,7 +44,16 @@ export class EmployeesService {
         }
     }
 
-    async update(id: string, employee: Employee): Promise<EmployeeResponse> {
+    async find(filter: {}): Promise<EmployeeResponse> {
+        try {
+            const employee = await EmployeeModel.findOne(filter);
+            return new EmployeeResponse(employee);
+        } catch (errors) {
+            return new EmployeeResponse(null, errors.errors);
+        }
+    }
+
+    async edit(id: string, employee: Employee): Promise<EmployeeResponse> {
         try {
             await EmployeeModel.update({ _id: new ObjectId(id) }, employee);
             return new EmployeeResponse();

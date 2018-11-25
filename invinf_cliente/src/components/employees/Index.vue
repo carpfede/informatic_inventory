@@ -27,7 +27,7 @@
                             <v-data-table hide-headers :search="search" :items="employees">
                                 <template slot="items" slot-scope="props">
                                     <td>{{ props.item.idNumber }}</td>
-                                    <td>{{ props.item.lastName }}, {{props.item.lastName}}</td>
+                                    <td>{{ props.item.lastName }}, {{props.item.firstName}}</td>
                                     <td>{{ props.item.email }}</td>
                                     <td>{{ props.item.telephone }}</td>
                                     <td>{{ props.item.birthday | toDate }}</td>
@@ -35,8 +35,12 @@
                                         <v-btn depressed outline icon fab dark color="primary" small @click="edit(props.item._id)">
                                             <v-icon>fas fa-pencil-alt</v-icon>
                                         </v-btn>
-                                        <v-btn depressed outline icon fab dark color="pink" small>
-                                            <v-icon>fas fa-trash-alt</v-icon>
+                                        <v-btn depressed outline icon fab dark color="green" small @click="edit(props.item._id)">
+                                            <v-icon>fas fa-eye</v-icon>
+                                        </v-btn>
+                                        <v-btn depressed outline icon fab dark color="black" small @click="edit(props.item._id)">
+                                            <v-icon v-if="!props.item.disabled">fas fa-lock</v-icon>
+                                            <v-icon v-if="props.item.disabled">fas fa-lock-open</v-icon>
                                         </v-btn>
                                     </td>
                                 </template>
@@ -84,6 +88,7 @@ export default {
   filters: {
     toDate(value) {
       var date = new Date(value);
+      date.setDate(date.getDate() + 1);
       return date.toLocaleDateString("es");
     }
   }

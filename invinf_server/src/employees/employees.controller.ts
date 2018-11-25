@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Response, HttpStatus, Get, UseGuards, Query } from '@nestjs/common';
+import { Controller, Post, Body, Response, Get, UseGuards, Query } from '@nestjs/common';
 import { Employee } from './models/employee.model';
 import { EmployeesService } from './employees.service';
 import * as _ from 'lodash';
@@ -14,6 +14,31 @@ export class EmployeesController {
         private readonly usersService: UsersService,
     ) { }
 
+
+    //GET
+
+    @Get('/lastIdNumber')
+    @UseGuards(AuthGuard('jwt'))
+    public async lastIdNumber(): Promise<number> {
+        const result = this.employeesService.lastIdNumber();
+        return await result;
+    }
+
+    @Get('/findAll')
+    @UseGuards(AuthGuard('jwt'))
+    public async findAll(): Promise<EmployeeResponse> {
+        const result = this.employeesService.findAll();
+        return await result;
+    }
+
+    @Get('/find')
+    @UseGuards(AuthGuard('jwt'))
+    public async find(@Query() filter): Promise<EmployeeResponse> {
+        const result = this.employeesService.find(filter);
+        return await result;
+    }
+
+    // POST
     @Post('create')
     @UseGuards(AuthGuard('jwt'))
     public async create(@Response() res, @Body() createEmployee: Employee) {
@@ -29,24 +54,11 @@ export class EmployeesController {
         return res.json(result);
     }
 
-    @Get('/findAll')
-    @UseGuards(AuthGuard('jwt'))
-    public async findAll(): Promise<EmployeeResponse> {
-        const result = this.employeesService.findAll();
-        return await result;
-    }
-
-    @Get('/lastIdNumber')
-    @UseGuards(AuthGuard('jwt'))
-    public async lastIdNumber(): Promise<number> {
-        const result = this.employeesService.lastIdNumber();
-        return await result;
-    }
-
     @Post('/edit')
     @UseGuards(AuthGuard('jwt'))
     public async edit(@Body() req): Promise<EmployeeResponse> {
-        const result = this.employeesService.update(req.id, req.employee);
+        const result = this.employeesService.edit(req.id, req.employee);
         return result;
     }
+
 }

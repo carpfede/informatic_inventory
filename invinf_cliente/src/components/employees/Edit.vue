@@ -17,7 +17,7 @@
                 <v-card>
                     <v-toolbar color="transparent" flat dense card>
                         <v-toolbar-title>
-                            <h4>Nuevo empleado</h4>
+                            <h4>Editar empleado</h4>
                         </v-toolbar-title>
                         <v-spacer></v-spacer>
                         <slot name="widget-header-action"></slot>
@@ -55,7 +55,7 @@
                                     <v-layout wrap align-center justify-space-around row>
                                         <v-flex xs7 offset-xs1>
                                             <v-menu ref="menu" lazy :close-on-content-click="false" v-model="menu" transition="scale-transition" offset-y full-width :nudge-right="40" :return-value.sync="employee.birthday">
-                                                <v-text-field slot="activator" label="Picker in menu" v-model="employee.birthday" prepend-icon="event" readonly></v-text-field>
+                                                <v-text-field slot="activator" label="Nacimiento" v-model="birthday" prepend-icon="event" readonly></v-text-field>
                                                 <v-date-picker v-model="employee.birthday" no-title scrollable>
                                                     <v-spacer></v-spacer>
                                                     <v-btn flat color="primary" @click="menu = false">Cancel</v-btn>
@@ -88,6 +88,7 @@ import _ from "lodash";
 export default {
   data: () => ({
     menu: false,
+    id: "",
     employee: {
       firstName: "",
       lastName: "",
@@ -101,15 +102,21 @@ export default {
     alert: false
   }),
   async created() {
+    this.id = this.$route.params.id;
     this.service = this.$store.state.services.employeeService;
-    this.employee = service.find;
+    const response = await this.service.find({ _id: this.id });
+
+    if (_.some(response.errors)) {
+      this.$router.push({ name: "404" });
+    }
+    this.employee = response.employee;
   },
   methods: {
     goBack() {
       this.$router.push({ name: "Empleados" });
     },
     async save() {
-      const response = await this.service.addEmployee(this.employee);
+      const response = await this.service.editEmployee(this.employee);
       if (_.some(response.data.errors)) {
         this.errors = response.data.errors;
         this.alert = true;
@@ -119,6 +126,18 @@ export default {
     },
     removeError(e) {
       this.errors = _.filter(this.errors, error => error !== e);
+    }
+  },
+  computed: {
+    birthday() {
+      return this.$options.filters.toDate(this.employee.birthday);
+    }
+  },
+  filters: {
+    toDate(value) {
+      let date = new Date(value);
+      date.setDate(date.getDate() + 1);
+      return date.toLocaleDateString("es");
     }
   }
 };

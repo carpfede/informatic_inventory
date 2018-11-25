@@ -4,8 +4,7 @@ import { AppModule } from './app.module';
 import passport = require('passport');
 import * as mongoose from 'mongoose';
 import { DB_PROVIDER } from './common/constants/constants';
-import * as session from 'express-session';
-import { DispatchError } from './common/middlewares/dispatchError';
+import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -16,15 +15,10 @@ async function bootstrap() {
     .setVersion('1.0')
     .addBearerAuth('Authorization', 'header')
     .build();
-  app.use(session({
-    secret: 'secret-key',
-    name: 'sess-tutorial',
-    resave: false,
-    saveUninitialized: false
-  }))
-  app.useGlobalFilters(new DispatchError());
-  app.use(passport.initialize());
-  app.use(passport.session());
+
+    
+  app.useGlobalFilters(new HttpExceptionFilter());
+
   mongoose.connect(DB_PROVIDER, { useNewUrlParser: true });
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api', app, document);

@@ -5,18 +5,22 @@ import * as uniqueValidator from 'mongoose-unique-validator';
 
 @plugin(uniqueValidator)
 export class User extends Typegoose {
-    @prop({ unique: true, required: true })
+    @prop({ unique: true, required: [true, 'El usuario es requerido'] })
     userName: string;
 
-    @prop({ required: true })
+    @prop({ required: [true, 'La contraseña es requerida'] })
     password: string;
 
-    @prop({ ref: Employee, required: true, unique: true })
+    @prop({ ref: Employee, required: [true, 'Debe estar vinculado a un empleado'], unique: true })
     employee_id: Employee;
 
     @instanceMethod
     validatePassword(pass: string) {
         return this.password === pass;
+    }
+
+    static get modelName(): string {
+        return this.modelName;
     }
 }
 
@@ -24,3 +28,4 @@ export const UserModel = new User().getModelForClass(User, {
     existingMongoose: mongoose,
     schemaOptions: { collection: 'users' },
 });
+

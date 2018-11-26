@@ -15,12 +15,7 @@ class userService {
     };
 
     const response = await this.axios.post(`${this.baseUrl}users/login`, log);
-    if (response.data.user) {
-      localStorage.setItem("user", JSON.stringify(response.data.user));
-      return;
-    }
-
-    return response.data.errors;
+    return response;
   }
 
   logout() {

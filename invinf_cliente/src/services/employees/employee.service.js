@@ -53,4 +53,4 @@ class employeeService {
     }
 }
 
-export default equipeService;
+export default employeeService;

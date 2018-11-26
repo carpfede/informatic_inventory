@@ -1,3 +1,5 @@
+import $store from '../store/index'
+
 const config =
 {
   baseUrl: "http://localhost:3000/",
@@ -14,7 +16,7 @@ const config =
     }
   },
   token: {
-    Authorization: JSON.parse(localStorage.getItem('user')) ? `Bearer ${JSON.parse(localStorage.getItem('user')).token}` : ''
+    Authorization: $store.state.user ? `Bearer ${$store.state.user.token}` : ''
   }
 };
 

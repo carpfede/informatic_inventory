@@ -1,9 +1,9 @@
 import { Controller, Get, UseGuards, Post, Response, Body, HttpStatus } from '@nestjs/common';
 import { User } from './models/user.model';
 import { UsersService } from './users.service';
-import { ApiResponse } from '@nestjs/swagger';
 import { LoginResponse } from 'src/auth/dto/loginResponse.dto';
 import { LoginModel } from 'src/auth/dto/login.dto';
+import * as _ from 'lodash';
 
 @Controller('users')
 export class UsersController {
@@ -19,7 +19,9 @@ export class UsersController {
     @Post('login')
     public async login(@Body() req: LoginModel): Promise<LoginResponse> {
         const res = await this.usersService.login(req)
-
-        return new LoginResponse(res.user.token, res.user.userName, res.user.firstName, res.errors);
+        if (_.some(res.errors)) {
+            return new LoginResponse(null, null, null, res.errors);
+        }
+        return new LoginResponse(res.user.token, res.user.userName, res.user.firstName);
     }
 }

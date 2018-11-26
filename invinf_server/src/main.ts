@@ -16,8 +16,8 @@ async function bootstrap() {
     .addBearerAuth('Authorization', 'header')
     .build();
 
-    
-  app.useGlobalFilters(new HttpExceptionFilter());
+
+  // app.useGlobalFilters(new HttpExceptionFilter());
 
   mongoose.connect(DB_PROVIDER, { useNewUrlParser: true });
   const document = SwaggerModule.createDocument(app, options);

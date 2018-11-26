@@ -12,7 +12,8 @@ const state = {
   systemTitle: 'Inventario Informático',
   systemDescription: 'Gestión de equipos informáticos para control de stock',
   logo,
-  token
+  token,
+  user: null
 };
 
 export default new Vuex.Store({

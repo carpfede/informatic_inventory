@@ -103,7 +103,7 @@ const router = new Router({
     {
       path: '/empleados/detalle/id:?',
       meta: { title: 'Empleados' },
-      name: 'Empleados_detalle',
+      name: 'Empleados_detail',
       component: () => import(
         `@/components/employees/Detail.vue`
       )

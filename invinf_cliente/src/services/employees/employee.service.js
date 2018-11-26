@@ -1,6 +1,6 @@
 import config from "../../config/config";
 
-class equipeService {
+class employeeService {
     axios;
     lodash;
     baseUrl;

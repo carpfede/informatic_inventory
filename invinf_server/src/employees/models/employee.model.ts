@@ -21,6 +21,9 @@ export class Employee extends Typegoose {
 
     @prop()
     telephone: number;
+
+    @prop({ default: false })
+    disabled: Boolean;
 }
 
 export const EmployeeModel = new Employee().getModelForClass(Employee, {

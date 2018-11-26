@@ -19,9 +19,8 @@ export class User extends Typegoose {
         return this.password === pass;
     }
 
-    static get modelName(): string {
-        return this.modelName;
-    }
+    @prop({ default: false })
+    disabled: Boolean;
 }
 
 export const UserModel = new User().getModelForClass(User, {

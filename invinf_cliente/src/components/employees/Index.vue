@@ -35,12 +35,14 @@
                                         <v-btn depressed outline icon fab dark color="primary" small @click="edit(props.item._id)">
                                             <v-icon>fas fa-pencil-alt</v-icon>
                                         </v-btn>
-                                        <v-btn depressed outline icon fab dark color="green" small @click="edit(props.item._id)">
+                                        <v-btn depressed outline icon fab dark color="green" small @click="show(props.item._id)">
                                             <v-icon>fas fa-eye</v-icon>
                                         </v-btn>
-                                        <v-btn depressed outline icon fab dark color="black" small @click="edit(props.item._id)">
-                                            <v-icon v-if="!props.item.disabled">fas fa-lock</v-icon>
-                                            <v-icon v-if="props.item.disabled">fas fa-lock-open</v-icon>
+                                        <v-btn v-if="props.item.disabled" depressed outline icon fab dark color="black" small @click="enableEmployee(props.item._id)">
+                                            <v-icon>fas fa-lock-open</v-icon>
+                                        </v-btn>
+                                        <v-btn v-if="!props.item.disabled" depressed outline icon fab dark color="black" small @click="disabled(props.item._id)">
+                                            <v-icon>fas fa-lock</v-icon>
                                         </v-btn>
                                     </td>
                                 </template>
@@ -48,6 +50,27 @@
                         </v-card-text>
                     </v-card>
                 </v-flex>
+            </v-layout>
+            <v-layout row justify-center>
+                <v-dialog v-model="dialog" max-width="290" return-value="true">
+                    <v-card>
+                        <v-card-text>
+                            ¿Está seguro que desea deshabilitar el empleado?
+                        </v-card-text>
+
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+
+                            <v-btn color="teal darken-1" flat="flat" @click="dialog = false">
+                                Cancelar
+                            </v-btn>
+
+                            <v-btn color="teal darken-1" flat="flat" @click="disableEmployee()">
+                                Confirmar
+                            </v-btn>
+                        </v-card-actions>
+                    </v-card>
+                </v-dialog>
             </v-layout>
         </v-container>
     </div>
@@ -58,6 +81,7 @@ import _ from "lodash";
 
 export default {
   data: () => ({
+    dialog: false,
     isLoaded: false,
     search: "",
     errors: [],
@@ -65,24 +89,55 @@ export default {
   }),
   async created() {
     this.service = this.$store.state.services.employeeService;
-    const response = await this.service.findAll();
-    if (_.some(response.data.errors)) {
-      this.errors = response.data.errors;
-      this.alert = true;
-    } else {
-      _.forEach(response.data.employee, e => {
-        e.value = false;
-      });
-      this.employees = response.data.employee;
-    }
+    this.findEmployee();
     this.isLoaded = true;
   },
   methods: {
+    async findEmployee() {
+      const response = await this.service.findAll();
+      if (_.some(response.data.errors)) {
+        this.errors = response.data.errors;
+        this.alert = true;
+      } else {
+        _.forEach(response.data.employee, e => {
+          e.value = false;
+        });
+        this.employees = response.data.employee;
+      }
+    },
     create() {
       this.$router.push({ name: "Empleados_create" });
     },
     edit(id) {
       this.$router.push({ name: "Empleados_edit", params: { id } });
+    },
+    show(id) {
+      this.$router.push({ name: "Empleados_detail", params: { id } });
+    },
+    disabled(id) {
+      this.dialog = true;
+      this.disabledEmployeeId = id;
+    },
+    async disableEmployee() {
+      this.dialog = false;
+      const response = await this.service.disableEmployee(
+        this.disabledEmployeeId
+      );
+      if (_.some(response.data.errors)) {
+        this.errors = response.data.errors;
+        this.alert = true;
+        return;
+      }
+      this.findEmployee();
+    },
+    async enableEmployee(id) {
+      const response = await this.service.enableEmployee(id);
+      if (_.some(response.data.errors)) {
+        this.errors = response.data.errors;
+        this.alert = true;
+        return;
+      }
+      this.findEmployee();
     }
   },
   filters: {

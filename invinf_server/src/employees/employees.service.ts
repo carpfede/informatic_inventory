@@ -3,6 +3,7 @@ import { Employee, EmployeeModel } from './models/employee.model';
 import { EmployeeResponse } from './dtos/employee.response.dto';
 import mongoose from 'mongoose';
 import { ObjectId } from 'mongodb';
+import { UserModel } from 'src/users/models/user.model';
 
 @Injectable()
 export class EmployeesService {
@@ -62,9 +63,21 @@ export class EmployeesService {
         }
     }
 
-    delete(id: mongoose.Types.ObjectId): EmployeeResponse {
+    async disable(id: string, disable: {}): Promise<EmployeeResponse> {
         try {
-            EmployeeModel.deleteOne(id);
+            await EmployeeModel.update({ _id: new ObjectId(id) }, disable);
+            await UserModel.update({ employee_id: new ObjectId(id) }, disable);
+            return new EmployeeResponse();
+        } catch (error) {
+            return new EmployeeResponse(null, error.errors);
+        }
+    }
+
+    async enable(id: string, enable: {}): Promise<EmployeeResponse> {
+        try {
+            await EmployeeModel.update({ _id: new ObjectId(id) }, enable);
+            await UserModel.update({ employee_id: new ObjectId(id) }, enable);
+            return new EmployeeResponse();
         } catch (error) {
             return new EmployeeResponse(null, error.errors);
         }

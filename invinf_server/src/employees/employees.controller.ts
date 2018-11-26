@@ -61,4 +61,18 @@ export class EmployeesController {
         return result;
     }
 
+    @Post('/disable')
+    @UseGuards(AuthGuard('jwt'))
+    public async disable(@Body() req): Promise<EmployeeResponse> {
+        const result = await this.employeesService.disable(req.id, req.disable);
+        return result;
+    }
+
+    @Post('/enable')
+    @UseGuards(AuthGuard('jwt'))
+    public async enable(@Body() req): Promise<EmployeeResponse> {
+        const result = await this.employeesService.enable(req.id, req.enable);
+        return result;
+    }
+
 }

@@ -107,11 +107,52 @@ const router = new Router({
       component: () => import(
         `@/components/employees/Detail.vue`
       )
+    },
+    {
+      path: '/equipos',
+      meta: { title: 'Equipos' },
+      name: 'Equipos_root',
+      redirect: {
+        name: 'Equipos'
+      }
+    },
+    {
+      path: '/equipos/index',
+      meta: { title: 'Equipos' },
+      name: 'Equipos',
+      component: () => import(
+        `@/components/equipes/Index.vue`
+      )
+    },
+    {
+      path: '/equipos/crear',
+      meta: { title: 'Equipos' },
+      name: 'Equipos_create',
+      component: () => import(
+        `@/components/equipes/Create.vue`
+      )
+    },
+    {
+      path: '/equipos/editar/:id?',
+      meta: { title: 'Equipos' },
+      name: 'Equipos_edit',
+      component: () => import(
+        `@/components/equipes/Edit.vue`
+      )
+    },
+    {
+      path: '/equipos/detalle/id:?',
+      meta: { title: 'Empleados' },
+      name: 'Equipos_detail',
+      component: () => import(
+        `@/components/equipes/Detail.vue`
+      )
     }
   ]
 });
 
 router.beforeEach((to, from, next) => {
+  // eslint-disable-next-line no-console
   console.log(to.path);
   if (to.path === '/login') {
     localStorage.clear();

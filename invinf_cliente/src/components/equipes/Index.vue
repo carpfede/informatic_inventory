@@ -4,7 +4,7 @@
         <v-container grid-list-xl fluid v-if="isLoaded">
             <v-layout row wrap>
                 <v-flex sm10>
-                    <h3>Lista de empleados</h3>
+                    <h3>Lista de equipos</h3>
                     <v-alert v-model="alert" type="error" v-for="e in errors" v-bind:key="e.path">
                         {{e.message}}
                     </v-alert>

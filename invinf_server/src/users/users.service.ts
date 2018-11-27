@@ -2,7 +2,6 @@ import { Injectable, HttpException, HttpStatus, Inject, forwardRef } from '@nest
 import { User, UserModel } from './models/user.model';
 import { CreateUserResponse } from './dtos/createUserResponse.dto';
 import { LoginModel } from 'src/auth/dto/login.dto';
-import { LoginResponse } from 'src/auth/dto/loginResponse.dto';
 import { AuthService } from 'src/auth/auth.service';
 import { JwtPayload } from 'src/auth/jwt-payload';
 import { EmployeeModel } from 'src/employees/models/employee.model';
@@ -25,7 +24,6 @@ export class UsersService {
 
     async login(loginDto: LoginModel): Promise<CreateUserResponse> {
         const { username, pass } = loginDto;
-
         const user = await UserModel.findOne({ userName: username })
 
         if (!user || user.password !== pass) {

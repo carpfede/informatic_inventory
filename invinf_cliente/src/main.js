@@ -5,7 +5,7 @@ import router from "./router";
 import store from "./store/index";
 import axios from "axios";
 import HttpStatus from './config/httpStatus'
-
+import config from './config/config'
 axios.interceptors.response.use(null, function (error) {
   const status = error.response.status;
 
@@ -19,8 +19,13 @@ axios.interceptors.response.use(null, function (error) {
 });
 
 Vue.config.productionTip = false;
+
 new Vue({
   router,
   store,
   render: h => h(App)
 }).$mount("#app");
+
+config.token = {
+  Authorization: store.state.user ? `Bearer ${store.state.user.token}` : ''
+}

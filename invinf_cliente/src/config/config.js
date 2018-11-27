@@ -1,5 +1,3 @@
-import $store from '../store/index'
-
 const config =
 {
   baseUrl: "http://localhost:3000/",
@@ -14,9 +12,6 @@ const config =
       const pattern = /^(0|[1-9][0-9]*)$/;
       return pattern.test(value) || "Solo números."
     }
-  },
-  token: {
-    Authorization: $store.state.user ? `Bearer ${$store.state.user.token}` : ''
   }
 };
 

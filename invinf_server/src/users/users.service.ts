@@ -25,7 +25,7 @@ export class UsersService {
     async login(loginDto: LoginModel): Promise<CreateUserResponse> {
         const { username, pass } = loginDto;
         const user = await UserModel.findOne({ userName: username })
-
+        console.log(user);
         if (!user || user.password !== pass) {
             return new CreateUserResponse(null, ['Credenciales invalidas']);
         }

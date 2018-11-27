@@ -1,4 +1,4 @@
-import config from "../../config/config";
+import { authHeader } from '../../helper';
 
 class employeeService {
     axios;
@@ -12,6 +12,7 @@ class employeeService {
 
     // GET
     async findAll() {
+        console.log(authHeader());
         const response = await this.axios.get(`${this.baseUrl}employees/findAll`, { headers: config.token });
         return response;
     }

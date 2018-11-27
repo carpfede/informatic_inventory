@@ -1,6 +1,5 @@
 import Vue from "vue";
 import Router from "vue-router";
-import store from '../store/index';
 
 Vue.use(Router);
 
@@ -153,16 +152,12 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-  // eslint-disable-next-line no-console
-  console.log(to.path);
-  if (to.path === '/login') {
-    store.state.user = null;
+  const currentUser = JSON.parse(localStorage.getItem('user'));
+
+  if (to.name !== 'Login' && !currentUser) {
+    next({ name: 'Login' })
   }
 
-  const currentUser = store.state.user = JSON.parse(localStorage.getItem("user"));
-  if (to.path !== "/login" && !currentUser) {
-    next("/login");
-  }
   next();
 });
 

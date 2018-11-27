@@ -25,7 +25,3 @@ new Vue({
   store,
   render: h => h(App)
 }).$mount("#app");
-
-config.token = {
-  Authorization: store.state.user ? `Bearer ${store.state.user.token}` : ''
-}

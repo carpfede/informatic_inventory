@@ -15,11 +15,11 @@ class userService {
     };
 
     const response = await this.axios.post(`${this.baseUrl}users/login`, log);
+    localStorage.setItem("user", JSON.stringify(response.data.user));
     return response;
   }
 
   logout() {
-    // remove user from local storage to log user out
     localStorage.removeItem("user");
   }
 }

@@ -1,8 +1,18 @@
 <template>
   <div id="equipes">
-    <v-progress-linear :indeterminate="true" v-if="!isLoaded"></v-progress-linear>
-    <v-container grid-list-xl fluid v-if="isLoaded">
-      <v-layout row wrap>
+    <v-progress-linear
+      :indeterminate="true"
+      v-if="!isLoaded"
+    ></v-progress-linear>
+    <v-container
+      grid-list-xl
+      fluid
+      v-if="isLoaded"
+    >
+      <v-layout
+        row
+        wrap
+      >
         <v-flex sm10>
           <h3>Lista de empleados</h3>
           <v-alert
@@ -14,12 +24,22 @@
         </v-flex>
         <v-flex lg12>
           <div class="text-xs-right">
-            <v-btn fab medium dark color="teal" right @click="create()">
+            <v-btn
+              fab
+              medium
+              dark
+              color="teal"
+              right
+              @click="create()"
+            >
               <v-icon dark>fas fa-plus</v-icon>
             </v-btn>
           </div>
           <v-card>
-            <v-toolbar card color="white">
+            <v-toolbar
+              card
+              color="white"
+            >
               <v-text-field
                 flat
                 solo
@@ -35,8 +55,37 @@
             </v-toolbar>
             <v-divider></v-divider>
             <v-card-text class="pa-0">
-              <v-data-table hide-headers :search="search" :items="employees">
-                <template slot="items" slot-scope="props">
+              <v-data-table
+                :search="search"
+                :items="employees"
+              >
+                <template
+                  slot="headers"
+                  slot-scope="props"
+                >
+                  <tr>
+                    <th class="text-xs-left">
+                      <v-icon>fas fa-id-card-alt</v-icon>
+                    </th>
+                    <th class="text-xs-center">
+                      <v-icon>fas fa-address-card</v-icon>
+                    </th>
+                    <th class="text-xs-center">
+                      <v-icon>fas fa-envelope</v-icon>
+                    </th>
+                    <th class="text-xs-center">
+                      <v-icon>fas fa-phone-square</v-icon>
+                    </th>
+                    <th class="text-xs-center">
+                      <v-icon>fas fa-calendar-alt</v-icon>
+                    </th>
+                    <td></td>
+                  </tr>
+                </template>
+                <template
+                  slot="items"
+                  slot-scope="props"
+                >
                   <td>{{ props.item.idNumber }}</td>
                   <td>{{ props.item.lastName }}, {{props.item.firstName}}</td>
                   <td>{{ props.item.email }}</td>
@@ -100,17 +149,32 @@
           </v-card>
         </v-flex>
       </v-layout>
-      <v-layout row justify-center>
-        <v-dialog v-model="dialog" max-width="290" return-value="true">
+      <v-layout
+        row
+        justify-center
+      >
+        <v-dialog
+          v-model="dialog"
+          max-width="290"
+          return-value="true"
+        >
           <v-card>
             <v-card-text>¿Está seguro que desea deshabilitar el empleado?</v-card-text>
 
             <v-card-actions>
               <v-spacer></v-spacer>
 
-              <v-btn color="teal darken-1" flat="flat" @click="dialog = false">Cancelar</v-btn>
+              <v-btn
+                color="teal darken-1"
+                flat="flat"
+                @click="dialog = false"
+              >Cancelar</v-btn>
 
-              <v-btn color="teal darken-1" flat="flat" @click="disableEmployee()">Confirmar</v-btn>
+              <v-btn
+                color="teal darken-1"
+                flat="flat"
+                @click="disableEmployee()"
+              >Confirmar</v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -187,7 +251,7 @@ export default {
     toDate(value) {
       var date = new Date(value);
       date.setDate(date.getDate() + 1);
-      return date.toLocaleDateString("es");
+      return date ? "" : date.toLocaleDateString("es");
     }
   }
 };

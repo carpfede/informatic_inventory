@@ -31,13 +31,11 @@ class employeeService {
     //POST
     async addEmployee(employee) {
         const response = await this.axios.post(`${this.baseUrl}employees/create`, employee, { headers: this.token });
-        console.log(response);
         return response;
     }
 
     async editEmployee(employee) {
         const response = await this.axios.post(`${this.baseUrl}employees/edit`, { id: employee._id, employee }, { headers: this.token });
-        console.log(response);
         return response;
     }
 

@@ -74,5 +74,4 @@ export class EmployeesController {
         const result = await this.employeesService.enable(req.id, req.enable);
         return result;
     }
-
 }

@@ -10,6 +10,8 @@ export class Area extends Typegoose {
     @prop({ required: true })
     name: string;
 
+    @prop({ default: false })
+    disabled: string;
 }
 
 export const AreaModel = new Area().getModelForClass(Area, {

@@ -4,7 +4,7 @@ const state = user
     : { status: {}, user: null };
 
 const actions = {
-    login({ commit }, { user }) {
+    login({ commit }, user) {
         commit('loginSuccess', user);
     },
     logout({ commit }) {

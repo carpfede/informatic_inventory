@@ -1,45 +1,17 @@
 <template>
   <v-app>
-    <v-container
-      fill-height
-      justify-center
-      align-center
-    >
-      <v-flex
-        xs8
-        sm5
-        md5
-        lg4
-      >
-        <v-layout
-          row
-          wrap
-          v-for="e in errors"
-          v-bind:key="e.path"
-          fill
-        >
-          <v-alert
-            v-model="alert"
-            type="error"
-            @click="removeError(e)"
-          >
-            {{e}}
-          </v-alert>
+    <v-container fill-height justify-center align-center>
+      <v-flex xs8 sm5 md5 lg4>
+        <v-layout row wrap v-for="e in errors" v-bind:key="e.path" fill>
+          <v-alert v-model="alert" type="error" @click="removeError(e)">{{e}}</v-alert>
         </v-layout>
         <v-card class="mt-0 pt-0">
           <v-card-title class="teal">
             <div class="title white--text">Bienvenido a Inventario Informático!</div>
           </v-card-title>
           <v-card-text>
-            <v-form
-              ref="form"
-              lazy-validation
-              @submit.prevent="login"
-            >
-              <v-layout
-                row
-                wrap
-              >
+            <v-form ref="form" lazy-validation @submit.prevent="singin">
+              <v-layout row wrap>
                 <v-text-field
                   v-model="user"
                   label="Usuario"
@@ -47,10 +19,7 @@
                   :rules="userRules"
                 ></v-text-field>
               </v-layout>
-              <v-layout
-                row
-                wrap
-              >
+              <v-layout row wrap>
                 <v-text-field
                   type="password"
                   v-model="pass"
@@ -60,11 +29,7 @@
                 ></v-text-field>
               </v-layout>
               <div class="text-xs-right">
-                <v-btn
-                  color="success"
-                  type="submit"
-                >
-                  Ingresar
+                <v-btn color="success" type="submit">Ingresar
                   <v-icon right>fa fa-sign-in-alt</v-icon>
                 </v-btn>
               </div>
@@ -79,7 +44,7 @@
 <script>
 import router from "../router";
 import _ from "lodash";
-import { mapActions } from 'vuex'
+import { mapActions } from "vuex";
 
 export default {
   data: () => ({
@@ -97,16 +62,14 @@ export default {
   },
   methods: {
     ...mapActions("account", ["login", "logout"]),
-    login: async function() {
-      if (this.$refs.form.validate()) {
-        const response = await this.userService.logIn(this.user, this.pass);
-        if (_.some(response.data.errors)) {
-          this.errors = response.data.errors;
-          this.alert = true;
-        } else {
-          this.login(response.data.user);
-          router.push({ name: "Home" });
-        }
+    singin: async function() {
+      const response = await this.userService.logIn(this.user, this.pass);
+      if (_.some(response.data.errors)) {
+        this.errors = response.data.errors;
+        this.alert = true;
+      } else {
+        this.login(response.data.user);
+        router.push({ name: "Home" });
       }
     },
     removeError(e) {

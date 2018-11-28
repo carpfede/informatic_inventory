@@ -1,5 +1,5 @@
 <template>
-  <div id="equipes">
+  <div id="components">
     <v-progress-linear
       :indeterminate="true"
       v-if="!isLoaded"
@@ -14,7 +14,7 @@
         wrap
       >
         <v-flex sm10>
-          <h3>Lista de empleados</h3>
+          <h3>Lista de componentes</h3>
           <v-alert
             v-model="alert"
             type="error"

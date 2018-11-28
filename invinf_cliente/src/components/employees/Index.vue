@@ -1,5 +1,5 @@
 <template>
-  <div id="equipes">
+  <div id="employees">
     <v-progress-linear
       :indeterminate="true"
       v-if="!isLoaded"

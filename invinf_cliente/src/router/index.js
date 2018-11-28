@@ -193,7 +193,7 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   const currentUser = JSON.parse(localStorage.getItem('user'));
-  
+
   if (to.name === 'Login' && currentUser) {
     next({ name: 'Home' })
   }

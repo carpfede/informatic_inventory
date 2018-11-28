@@ -6,9 +6,10 @@ import { EmployeesModule } from './employees/employees.module';
 import { AuthModule } from './auth/auth.module';
 import { AreasModule } from './areas/areas.module';
 import { ComponentsModule } from './components/components.module';
+import { EquipesModule } from './equipes/equipes.module';
 
 @Module({
-  imports: [UsersModule, EmployeesModule, AuthModule, AreasModule, ComponentsModule],
+  imports: [UsersModule, EmployeesModule, AuthModule, AreasModule, ComponentsModule, EquipesModule],
   controllers: [AppController],
   providers: [AppService],
 })

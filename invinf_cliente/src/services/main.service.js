@@ -12,6 +12,7 @@ class mainService {
         return [
             { 'href': '/', 'title': 'Home', 'icon': 'home' },
             { 'href': '/equipos', 'title': 'Equipos', 'icon': 'fas fa-desktop' },
+            { 'href': '/componentes', 'title': 'Componentes', 'icon': 'fas fa-microchip' },
             { 'href': '/areas', 'title': 'Areas', 'icon': 'fas fa-compass' },
             { 'href': '/cambios', 'title': 'Cambios', 'icon': 'fas fa-exchange-alt' },
             { 'href': '/reportes', 'title': 'Reportes', 'icon': 'far fa-file-alt' },

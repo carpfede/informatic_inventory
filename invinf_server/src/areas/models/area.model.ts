@@ -11,7 +11,7 @@ export class Area extends Typegoose {
     name: string;
 
     @prop({ default: false })
-    disabled: string;
+    disabled: Boolean;
 }
 
 export const AreaModel = new Area().getModelForClass(Area, {

@@ -2,7 +2,7 @@ import { Typegoose, prop, plugin } from 'typegoose';
 import * as mongoose from 'mongoose';
 import * as uniqueValidator from 'mongoose-unique-validator';
 
-@plugin(uniqueValidator)
+@plugin(uniqueValidator, { message: 'Error, expected {PATH} to be unique.' })
 export class Employee extends Typegoose {
     @prop({ required: true })
     firstName: string;

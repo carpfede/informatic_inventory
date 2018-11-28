@@ -49,7 +49,7 @@ export class AreasService {
             await AreaModel.update({ _id: new ObjectId(id) }, area);
             return new AreaResponse();
         } catch (error) {
-            return new AreaResponse(null, error.errors);
+            return new AreaResponse(null, error)
         }
     }
 

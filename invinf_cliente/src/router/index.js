@@ -147,6 +147,46 @@ const router = new Router({
       component: () => import(
         `@/components/equipes/Detail.vue`
       )
+    },
+    {
+      path: '/areas',
+      meta: { title: 'Areas' },
+      name: 'Areas_root',
+      redirect: {
+        name: 'Areas'
+      }
+    },
+    {
+      path: '/areas/index',
+      meta: { title: 'Areas' },
+      name: 'Areas',
+      component: () => import(
+        `@/components/areas/Index.vue`
+      )
+    },
+    {
+      path: '/areas/crear',
+      meta: { title: 'Areas' },
+      name: 'Areas_create',
+      component: () => import(
+        `@/components/areas/Create.vue`
+      )
+    },
+    {
+      path: '/areas/editar/:id?',
+      meta: { title: 'Areas' },
+      name: 'Areas_edit',
+      component: () => import(
+        `@/components/areas/Edit.vue`
+      )
+    },
+    {
+      path: '/areas/detalle/id:?',
+      meta: { title: 'Areas' },
+      name: 'Areas_detail',
+      component: () => import(
+        `@/components/areas/Detail.vue`
+      )
     }
   ]
 });

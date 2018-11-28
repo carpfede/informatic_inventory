@@ -12,7 +12,8 @@ class mainService {
         return [
             { 'href': '/', 'title': 'Home', 'icon': 'home' },
             { 'href': '/equipos', 'title': 'Equipos', 'icon': 'fas fa-desktop' },
-            { 'href': '/cambios', 'title': 'Cambios', 'icon': 'view_list' },
+            { 'href': '/areas', 'title': 'Areas', 'icon': 'fas fa-compass' },
+            { 'href': '/cambios', 'title': 'Cambios', 'icon': 'fas fa-exchange-alt' },
             { 'href': '/reportes', 'title': 'Reportes', 'icon': 'far fa-file-alt' },
             { 'href': '/empleados', 'title': 'Empleados', 'icon': 'fas fa-users' },
         ]

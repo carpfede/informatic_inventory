@@ -28,29 +28,29 @@ export class AreasController {
     // POST
     @Post('create')
     @UseGuards(AuthGuard('jwt'))
-    public async create(@Response() res, @Body() createArea: Area): Promise<AreaResponse> {
+    public async create(@Response() res, @Body() createArea: Area) {
         const result = await this.areaService.create(createArea);
-        return result;
+        return res.json(result);
     }
 
     @Post('/edit')
     @UseGuards(AuthGuard('jwt'))
-    public async edit(@Body() req): Promise<AreaResponse> {
-        const result = this.areaService.edit(req.id, req.employee);
-        return result;
+    public async edit(@Response() res, @Body() req) {
+        const result = await this.areaService.edit(req.id, req.area);
+        return res.json(result);
     }
 
     @Post('/disable')
     @UseGuards(AuthGuard('jwt'))
-    public async disable(@Body() req): Promise<AreaResponse> {
+    public async disable(@Response() res, @Body() req) {
         const result = await this.areaService.disable(req.id, req.disable);
-        return result;
+        return res.json(result);
     }
 
     @Post('/enable')
     @UseGuards(AuthGuard('jwt'))
-    public async enable(@Body() req): Promise<AreaResponse> {
+    public async enable(@Response() res, @Body() req) {
         const result = await this.areaService.enable(req.id, req.enable);
-        return result;
+        return res.json(result);
     }
 }

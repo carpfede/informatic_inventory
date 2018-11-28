@@ -56,9 +56,9 @@ export class EmployeesController {
 
     @Post('/edit')
     @UseGuards(AuthGuard('jwt'))
-    public async edit(@Body() req): Promise<EmployeeResponse> {
-        const result = this.employeesService.edit(req.id, req.employee);
-        return result;
+    public async edit(@Response() res, @Body() req) {
+        const result = await this.employeesService.edit(req.id, req.employee);
+        return res.json(result);
     }
 
     @Post('/disable')

@@ -34,6 +34,7 @@ export class EmployeesController {
     @Get('/find')
     @UseGuards(AuthGuard('jwt'))
     public async find(@Query() filter): Promise<EmployeeResponse> {
+        console.log(filter);
         const result = this.employeesService.find(filter);
         return await result;
     }

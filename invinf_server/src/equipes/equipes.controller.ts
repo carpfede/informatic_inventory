@@ -1,4 +1,4 @@
-import { Controller, Get, UseGuards, Post, Response, Body } from '@nestjs/common';
+import { Controller, Get, UseGuards, Post, Response, Body, Query } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ComponentDataResponse } from 'src/components/dto/component-date.response';
 import { EquipesService } from './equipes.service';
@@ -33,11 +33,25 @@ export class EquipesController {
         return result;
     }
 
+    @Get('/find')
+    @UseGuards(AuthGuard('jwt'))
+    public async find(@Query() filter): Promise<EquipesResponse> {
+        const result = this.equipeService.find(filter);
+        return await result;
+    }
+
     @Get('/lastCode')
     @UseGuards(AuthGuard('jwt'))
     public async lastCode(): Promise<number> {
         const result = this.equipeService.lastCode();
         return result;
+    }
+
+    @Get('/findEmployees')
+    @UseGuards(AuthGuard('jwt'))
+    public async findEmployees(@Query() filter){
+        const result = this.equipeService.findEmployees(filter);
+        return await result;
     }
     //SET
 
@@ -48,4 +62,17 @@ export class EquipesController {
         return res.json(result);
     }
 
+    @Post('/disable')
+    @UseGuards(AuthGuard('jwt'))
+    public async disable(@Body() req): Promise<EquipeResponse> {
+        const result = await this.equipeService.disable(req.id, req.disable);
+        return result;
+    }
+
+    @Post('/enable')
+    @UseGuards(AuthGuard('jwt'))
+    public async enable(@Body() req): Promise<EquipeResponse> {
+        const result = await this.equipeService.enable(req.id, req.enable);
+        return result;
+    }
 }

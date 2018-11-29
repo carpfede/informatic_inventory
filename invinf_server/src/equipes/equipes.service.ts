@@ -9,7 +9,7 @@ import { EquipeResponse } from './dto/equipe.response.dto';
 import { AreasService } from 'src/areas/areas.service';
 import { EmployeeEquipeModel } from './models/empleado_equipo.model';
 import * as _ from 'lodash';
-import { ObjectID } from 'mongodb';
+import { ObjectId } from 'mongodb';
 
 @Injectable()
 export class EquipesService {
@@ -25,6 +25,25 @@ export class EquipesService {
             return new EquipesResponse(equipes);
         } catch (error) {
             return new EquipesResponse(null, error);
+        }
+    }
+
+    async find(filter: {}): Promise<EquipesResponse> {
+        try {
+            const equipes = await EquipeModel.findOne(filter);
+            return new EquipesResponse(equipes);
+        } catch (errors) {
+            return new EquipesResponse(null, errors.errors);
+        }
+    }
+
+    async findEmployees(filter: {}): Promise<EquipesResponse> {
+        console.log(filter);
+        try {
+            const ids = await EmployeeEquipeModel.find(filter);
+            return new EquipesResponse(ids);
+        } catch (errors) {
+            return new EquipesResponse(null, errors.errors);
         }
     }
 
@@ -47,7 +66,6 @@ export class EquipesService {
 
     // SET
     async create(equipe: any): Promise<EquipeResponse> {
-        console.log(equipe);
         try {
             const createdEquipe = new EquipeModel(equipe);
             const resArea = await this.areaService.findById(equipe.area);
@@ -61,6 +79,24 @@ export class EquipesService {
             return new EquipeResponse(createdEquipe);
         } catch (errors) {
             return new EquipeResponse(null, errors.errors);
+        }
+    }
+
+    async disable(id: string, disable: {}): Promise<EquipeResponse> {
+        try {
+            await EquipeModel.update({ _id: new ObjectId(id) }, disable);
+            return new EquipeResponse();
+        } catch (error) {
+            return new EquipeResponse(null, error.errors);
+        }
+    }
+
+    async enable(id: string, enable: {}): Promise<EquipeResponse> {
+        try {
+            await EquipeModel.update({ _id: new ObjectId(id) }, enable);
+            return new EquipeResponse();
+        } catch (error) {
+            return new EquipeResponse(null, error.errors);
         }
     }
 }

@@ -3,6 +3,7 @@ import * as mongoose from 'mongoose';
 import * as uniqueValidator from 'mongoose-unique-validator';
 import { Area } from 'src/areas/models/area.model';
 import { ObjectId } from 'mongodb';
+import { Employee } from 'src/employees/models/employee.model';
 
 @plugin(uniqueValidator)
 export class Equipe extends Typegoose {
@@ -26,6 +27,8 @@ export class Equipe extends Typegoose {
 
     @prop({ default: false })
     disabled: Boolean;
+
+    employees: Employee[];
 }
 
 export const EquipeModel = new Equipe().getModelForClass(Equipe, {

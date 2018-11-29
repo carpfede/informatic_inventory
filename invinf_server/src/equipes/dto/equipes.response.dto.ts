@@ -1,5 +1,5 @@
 export class EquipesResponse {
-    equipes: [];
+    equipes: any;
     errors: [];
 
     public constructor(equipes = null, errors = null) {

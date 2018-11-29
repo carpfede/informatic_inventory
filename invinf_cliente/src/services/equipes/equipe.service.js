@@ -21,12 +21,13 @@ class equipeService {
         this.lodash.forEach(response.data.equipes, e => {
             e.areaName = this.lodash.find(areas, a => a._id === e.area).name
         });
-        console.log(response);
         return response;
     }
 
-    async find(filter) {
-        const response = await this.axios.get(`${this.baseUrl}equipes/find`, { headers: this.token, params: filter });
+    async find(id) {
+        const response = await this.axios.get(`${this.baseUrl}equipes/find`, { headers: this.token, params: { _id: id } });
+        const resEmployees = await this.axios.get(`${this.baseUrl}employees/findAll`, { headers: this.token });
+        response.data.equipes.employees = resEmployees.data.employee;
         return response;
     }
 

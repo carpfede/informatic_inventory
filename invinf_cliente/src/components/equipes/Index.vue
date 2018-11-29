@@ -125,7 +125,7 @@
                       dark
                       color="black"
                       small
-                      @click="enableEmployee(props.item._id)"
+                      @click="enableEquipe(props.item._id)"
                     >
                       <v-icon>fas fa-lock-open</v-icon>
                     </v-btn>
@@ -176,7 +176,7 @@
               <v-btn
                 color="teal darken-1"
                 flat="flat"
-                @click="disableEmployee()"
+                @click="disableEquipe()"
               >Confirmar</v-btn>
             </v-card-actions>
           </v-card>
@@ -218,27 +218,24 @@ export default {
           e.value = false;
         });
         this.equipes = response.data.equipes;
-        console.log(this.equipes);
       }
     },
     create() {
       this.$router.push({ name: "Equipos_create" });
     },
     edit(id) {
-      this.$router.push({ name: "Empleados_edit", params: { id } });
+      this.$router.push({ name: "Equipos_edit", params: { id } });
     },
     show(id) {
-      this.$router.push({ name: "Empleados_detail", params: { id } });
+      this.$router.push({ name: "Equipos_detail", params: { id } });
     },
     disabled(id) {
       this.dialog = true;
-      this.disabledEmployeeId = id;
+      this.disabledEquipeId = id;
     },
-    async disableEmployee() {
+    async disableEquipe() {
       this.dialog = false;
-      const response = await this.service.disableEmployee(
-        this.disabledEmployeeId
-      );
+      const response = await this.service.disableEquipe(this.disabledEquipeId);
       if (_.some(response.data.errors)) {
         this.errors = response.data.errors;
         this.alert = true;
@@ -246,8 +243,8 @@ export default {
       }
       this.findEquipes();
     },
-    async enableEmployee(id) {
-      const response = await this.service.enableEmployee(id);
+    async enableEquipe(id) {
+      const response = await this.service.enableEquipe(id);
       if (_.some(response.data.errors)) {
         this.errors = response.data.errors;
         this.alert = true;
@@ -260,7 +257,9 @@ export default {
     toDate(value) {
       var date = new Date(value);
       date.setDate(date.getDate() + 1);
-      return date && date != 'Invalid Date' ? date.toLocaleDateString("es") : "";
+      return date && date != "Invalid Date"
+        ? date.toLocaleDateString("es")
+        : "";
     }
   }
 };

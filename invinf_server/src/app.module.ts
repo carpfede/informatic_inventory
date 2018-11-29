@@ -7,9 +7,10 @@ import { AuthModule } from './auth/auth.module';
 import { AreasModule } from './areas/areas.module';
 import { ComponentsModule } from './components/components.module';
 import { EquipesModule } from './equipes/equipes.module';
+import { ProvidersModule } from './providers/providers.module';
 
 @Module({
-  imports: [UsersModule, EmployeesModule, AuthModule, AreasModule, ComponentsModule, EquipesModule],
+  imports: [UsersModule, EmployeesModule, AuthModule, AreasModule, ComponentsModule, EquipesModule, ProvidersModule],
   controllers: [AppController],
   providers: [AppService],
 })

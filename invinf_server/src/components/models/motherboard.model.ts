@@ -17,16 +17,19 @@ export class Motherboard extends Typegoose {
     chipset: string;
 
     @prop({ required: true })
-    width: string;
+    width: number;
 
     @prop({ required: true })
-    height: string;
+    height: number;
 
     @prop({ ref: Component, required: [true, 'Debe estar vinculado a un componente'] })
     component_id: Component;
 
     @prop({ ref: Equipe, required: [true, 'Debe estar vinculado a un equipo'] })
     equipe_id: Equipe;
+
+    @prop({ default: false })
+    disabled: Boolean;
 }
 
 export const PeripheralModel = new Motherboard().getModelForClass(Motherboard, {

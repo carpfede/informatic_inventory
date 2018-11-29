@@ -23,6 +23,21 @@ class equipeService {
         const response = await this.axios.get(`${this.baseUrl}equipes/find`, { headers: this.token, params: filter });
         return response;
     }
+
+    async getLastCode() {
+        const response = await this.axios.get(`${this.baseUrl}equipes/lastCode`, { headers: this.token });
+        return response;
+    }
+
+    async getTypes() {
+        const response = await this.axios.get(`${this.baseUrl}equipes/types`, { headers: this.token });
+        return response;
+    }
+
+    async getProviders() {
+        const response = await this.axios.get(`${this.baseUrl}equipes/providers`, { headers: this.token });
+        return response;
+    }
     //POST
     async addEquipe(equipe) {
         const response = await this.axios.post(`${this.baseUrl}equipes/create`, { headers: this.token });

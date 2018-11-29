@@ -13,13 +13,16 @@ export class Microprocessor extends Typegoose {
     socket: string;
 
     @prop({ required: true })
-    core: string;
+    core: number;
 
     @prop({ ref: Component, required: [true, 'Debe estar vinculado a un componente'] })
     component_id: Component;
 
     @prop({ ref: Equipe, required: [true, 'Debe estar vinculado a un equipo'] })
     equipe_id: Equipe;
+
+    @prop({ default: false })
+    disabled: Boolean;
 }
 
 export const PeripheralModel = new Microprocessor().getModelForClass(Microprocessor, {

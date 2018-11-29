@@ -7,13 +7,16 @@ import { Equipe } from 'src/equipes/models/equipe.model';
 @plugin(uniqueValidator)
 export class Peripheral extends Typegoose {
     @prop({ required: true })
-    conexion: string;
+    connector: string;
 
     @prop({ ref: Component, required: [true, 'Debe estar vinculado a un componente'] })
     component_id: Component;
 
     @prop({ ref: Equipe, required: [true, 'Debe estar vinculado a un equipo'] })
     equipe_id: Equipe;
+
+    @prop({ default: false })
+    disabled: Boolean;
 }
 
 export const PeripheralModel = new Peripheral().getModelForClass(Peripheral, {

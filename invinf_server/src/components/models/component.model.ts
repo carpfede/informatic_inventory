@@ -1,6 +1,7 @@
 import { Typegoose, prop, plugin } from 'typegoose';
 import * as mongoose from 'mongoose';
 import * as uniqueValidator from 'mongoose-unique-validator';
+import { Provider } from '../../providers/model/provider.model';
 
 @plugin(uniqueValidator)
 export class Component extends Typegoose {
@@ -18,6 +19,9 @@ export class Component extends Typegoose {
 
     @prop({ required: true })
     avgLife: Number;
+
+    @prop({ ref: Provider, required: true })
+    provider_id: Provider;
 }
 
 export const ComponentModel = new Component().getModelForClass(Component, {

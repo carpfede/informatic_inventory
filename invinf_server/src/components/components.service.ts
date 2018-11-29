@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { ComponentDataResponse } from './dto/component-date.response';
 import types from './dto/component-type.dto';
-import _ from "lodash";
+import * as _ from "lodash";
+
 @Injectable()
 export class ComponentsService {
 

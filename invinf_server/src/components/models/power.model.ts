@@ -14,6 +14,9 @@ export class Power extends Typegoose {
 
     @prop({ ref: Equipe, required: [true, 'Debe estar vinculado a un equipo'] })
     equipe_id: Equipe;
+
+    @prop({ default: false })
+    disabled: Boolean;
 }
 
 export const PeripheralModel = new Power().getModelForClass(Power, {

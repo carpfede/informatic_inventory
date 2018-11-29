@@ -6,7 +6,7 @@ import { Area } from 'src/areas/models/area.model';
 @plugin(uniqueValidator)
 export class Equipe extends Typegoose {
     @prop({ required: true })
-    code: string;
+    code: number;
 
     @prop({ required: true })
     dateEntry: Date;

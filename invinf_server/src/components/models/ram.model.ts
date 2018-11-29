@@ -17,6 +17,9 @@ export class RAM extends Typegoose {
 
     @prop({ ref: Equipe, required: [true, 'Debe estar vinculado a un equipo'] })
     equipe_id: Equipe;
+
+    @prop({ default: false })
+    disabled: Boolean;
 }
 
 export const PeripheralModel = new RAM().getModelForClass(RAM, {

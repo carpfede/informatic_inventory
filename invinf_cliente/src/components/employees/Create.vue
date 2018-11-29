@@ -55,7 +55,7 @@
                                     <v-layout wrap align-center justify-space-around row>
                                         <v-flex xs7 offset-xs1>
                                             <v-menu ref="menu" lazy :close-on-content-click="false" v-model="menu" transition="scale-transition" offset-y full-width :nudge-right="40" :return-value.sync="employee.birthday">
-                                                <v-text-field slot="activator" label="Picker in menu" v-model="employee.birthday" prepend-icon="event" readonly></v-text-field>
+                                                <v-text-field slot="activator" label="Nacimiento" v-model="employee.birthday" prepend-icon="event" readonly></v-text-field>
                                                 <v-date-picker v-model="employee.birthday" no-title scrollable>
                                                     <v-spacer></v-spacer>
                                                     <v-btn flat color="primary" @click="menu = false">Cancel</v-btn>

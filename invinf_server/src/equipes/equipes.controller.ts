@@ -1,9 +1,10 @@
-import { Controller, Get, UseGuards } from '@nestjs/common';
+import { Controller, Get, UseGuards, Post, Response, Body } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ComponentDataResponse } from 'src/components/dto/component-date.response';
 import { EquipesService } from './equipes.service';
 import { EquipesResponse } from './dto/equipes.response.dto';
 import { Provider } from 'src/providers/model/provider.model';
+import { EquipeResponse } from './dto/equipe.response.dto';
 
 @Controller('equipes')
 export class EquipesController {
@@ -39,4 +40,12 @@ export class EquipesController {
         return result;
     }
     //SET
+
+    @Post('/create')
+    @UseGuards(AuthGuard('jwt'))
+    public async create(@Response() res, @Body() body: {}): Promise<EquipeResponse> {
+        const result = await this.equipeService.create(body);
+        return res.json(result);
+    }
+
 }

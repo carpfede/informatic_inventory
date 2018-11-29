@@ -2,6 +2,7 @@ import { Typegoose, prop, plugin } from 'typegoose';
 import * as mongoose from 'mongoose';
 import * as uniqueValidator from 'mongoose-unique-validator';
 import { Area } from 'src/areas/models/area.model';
+import { ObjectId } from 'mongodb';
 
 @plugin(uniqueValidator)
 export class Equipe extends Typegoose {
@@ -21,7 +22,7 @@ export class Equipe extends Typegoose {
     state: string;
 
     @prop({ ref: Area, required: [true, 'Debe estar vinculado a un area'] })
-    area_id: Area;
+    area: any;
 
     @prop({ default: false })
     disabled: Boolean;

@@ -1,20 +1,45 @@
 <template>
-  <v-container grid-list-xl fluid>
-    <pre>{{component}}</pre>
-    <v-layout row wrap v-for="e in errors" v-bind:key="e.path" fill>
-      <v-alert v-model="alert" type="error" @click="removeError(e)">{{e.message}}</v-alert>
+  <v-container
+    grid-list-xl
+    fluid
+  >
+    <v-layout
+      row
+      wrap
+      v-for="e in errors"
+      v-bind:key="e.path"
+      fill
+    >
+      <v-alert
+        v-model="alert"
+        type="error"
+        @click="removeError(e)"
+      >{{e.message}}</v-alert>
     </v-layout>
-    <v-layout row wrap>
+    <v-layout
+      row
+      wrap
+    >
       <v-flex sm1>
         <div class="text-xs-center">
-          <v-btn flat icon color="blue lighten-2" @click="goBack()">
+          <v-btn
+            flat
+            icon
+            color="blue lighten-2"
+            @click="goBack()"
+          >
             <v-icon x-large>fas fa-arrow-left</v-icon>
           </v-btn>
         </div>
       </v-flex>
       <v-flex sm11>
         <v-card>
-          <v-toolbar color="transparent" flat dense card>
+          <v-toolbar
+            color="transparent"
+            flat
+            dense
+            card
+          >
             <v-toolbar-title>
               <h4>Nuevo equipo</h4>
             </v-toolbar-title>
@@ -24,47 +49,92 @@
           <v-divider></v-divider>
           <v-card-text>
             <slot name="widget-content">
-              <v-layout row wrap>
+              <v-layout
+                row
+                wrap
+              >
                 <v-flex>
-                  <v-layout wrap align-center justify-space-around row>
+                  <v-layout
+                    wrap
+                    align-center
+                    justify-space-around
+                    row
+                  >
                     <v-flex xs7>
-                      <v-text-field v-model="equipe.code" label="Código" readonly></v-text-field>
+                      <v-text-field
+                        v-model="equipe.code"
+                        label="Código"
+                        disabled
+                      ></v-text-field>
                     </v-flex>
                   </v-layout>
-                  <v-layout wrap align-center justify-space-around row>
+                  <v-layout
+                    wrap
+                    align-center
+                    justify-space-around
+                    row
+                  >
                     <v-flex xs7>
-                      <v-textarea v-model="equipe.description" label="Descripción"></v-textarea>
+                      <v-textarea
+                        v-model="equipe.description"
+                        label="Descripción"
+                      ></v-textarea>
                     </v-flex>
                   </v-layout>
-                  <v-layout wrap align-center justify-space-around row>
+                  <v-layout
+                    wrap
+                    align-center
+                    justify-space-around
+                    row
+                  >
                     <v-flex xs7>
-                      <v-text-field v-model="equipe.state" label="Estado" color="primary" readonly></v-text-field>
+                      <v-text-field
+                        v-model="equipe.state"
+                        label="Estado"
+                        color="primary"
+                        disabled
+                      ></v-text-field>
                     </v-flex>
                   </v-layout>
-                  <v-layout wrap align-center justify-space-around row>
+                  <v-layout
+                    wrap
+                    align-center
+                    justify-space-around
+                    row
+                  >
                     <v-flex xs7>
                       <v-text-field
                         v-model="equipe.avgLife"
                         label="Vida útil"
                         color="primary"
                         :rules="[rules.required]"
-                        readonly
+                        disabled
                       ></v-text-field>
                     </v-flex>
                   </v-layout>
-                  <v-layout wrap align-center justify-space-around row>
+                  <v-layout
+                    wrap
+                    align-center
+                    justify-space-around
+                    row
+                  >
                     <v-flex xs7>
                       <v-select
                         :items="areas"
                         v-model="equipe.area"
                         label="Areas"
                         item-text="code"
-                        item-value="_id"
+                        return-object
                         single-line
                       ></v-select>
                     </v-flex>
                   </v-layout>
-                  <v-layout wrap align-center justify-space-around row>
+                  <v-layout
+                    wrap
+                    align-center
+                    justify-space-around
+                    row
+                  >
                     <v-flex xs7>
                       <v-combobox
                         multiple
@@ -78,7 +148,12 @@
                       ></v-combobox>
                     </v-flex>
                   </v-layout>
-                  <v-layout wrap align-center justify-space-around row>
+                  <v-layout
+                    wrap
+                    align-center
+                    justify-space-around
+                    row
+                  >
                     <v-flex xs7>
                       <div class="text-xs-right">
                         <v-btn
@@ -94,7 +169,10 @@
                         </v-btn>
                       </div>
                       <v-data-table :items="equipe.components">
-                        <template slot="headers" slot-scope="props">
+                        <template
+                          slot="headers"
+                          slot-scope="props"
+                        >
                           <tr>
                             <th class="text-xs-center">
                               <v-icon>fas fa-microchip</v-icon>
@@ -111,7 +189,10 @@
                             <td></td>
                           </tr>
                         </template>
-                        <template slot="items" slot-scope="props">
+                        <template
+                          slot="items"
+                          slot-scope="props"
+                        >
                           <td>{{ typeName(props.item.key)}}</td>
                           <td>{{ providerName(props.item.provider_id)}}</td>
                           <td>$ {{ props.item.price}}</td>
@@ -149,6 +230,21 @@
                       </v-data-table>
                     </v-flex>
                   </v-layout>
+                  <v-layout
+                    wrap
+                    align-center
+                    justify-space-around
+                    row
+                  >
+                    <v-flex>
+                      <div class="text-xs-center">
+                        <v-btn
+                          color="success"
+                          @click="save()"
+                        >Guardar</v-btn>
+                      </div>
+                    </v-flex>
+                  </v-layout>
                 </v-flex>
               </v-layout>
             </slot>
@@ -156,15 +252,37 @@
         </v-card>
       </v-flex>
     </v-layout>
-    <v-layout row justify-center>
-      <v-dialog v-model="addComponentDialog" persistent max-width="600px">
-        <v-layout row wrap v-for="e in errorsAdd" v-bind:key="e.path" fill>
-          <v-alert v-model="alert" type="error" @click="removeErrorAdd(e)">{{e.message}}</v-alert>
+    <v-layout
+      row
+      justify-center
+    >
+      <v-dialog
+        v-model="addComponentDialog"
+        persistent
+        max-width="600px"
+      >
+        <v-layout
+          row
+          wrap
+          v-for="e in errorsAdd"
+          v-bind:key="e.path"
+          fill
+        >
+          <v-alert
+            v-model="alert"
+            type="error"
+            @click="removeErrorAdd(e)"
+          >{{e.message}}</v-alert>
         </v-layout>
         <v-layout row>
           <v-flex>
             <v-card>
-              <v-toolbar color="transparent" flat dense card>
+              <v-toolbar
+                color="transparent"
+                flat
+                dense
+                card
+              >
                 <v-toolbar-title>
                   <h4>Agregar componente</h4>
                 </v-toolbar-title>
@@ -173,9 +291,17 @@
               </v-toolbar>
               <v-divider></v-divider>
               <v-card-text>
-                <v-form ref="form" lazy-validation>
+                <v-form
+                  ref="form"
+                  lazy-validation
+                >
                   <slot name="widget-content">
-                    <v-layout wrap align-center justify-space-around row>
+                    <v-layout
+                      wrap
+                      align-center
+                      justify-space-around
+                      row
+                    >
                       <v-flex xs7>
                         <v-select
                           :items="componentTypes"
@@ -187,7 +313,12 @@
                         ></v-select>
                       </v-flex>
                     </v-layout>
-                    <v-layout wrap align-center justify-space-around row>
+                    <v-layout
+                      wrap
+                      align-center
+                      justify-space-around
+                      row
+                    >
                       <v-flex xs7>
                         <v-select
                           :items="providers"
@@ -199,7 +330,12 @@
                         ></v-select>
                       </v-flex>
                     </v-layout>
-                    <v-layout wrap align-center justify-space-around row>
+                    <v-layout
+                      wrap
+                      align-center
+                      justify-space-around
+                      row
+                    >
                       <v-flex xs7>
                         <v-text-field
                           v-model="component.mark"
@@ -208,7 +344,12 @@
                         ></v-text-field>
                       </v-flex>
                     </v-layout>
-                    <v-layout wrap align-center justify-space-around row>
+                    <v-layout
+                      wrap
+                      align-center
+                      justify-space-around
+                      row
+                    >
                       <v-flex xs7>
                         <v-text-field
                           v-model="component.model"
@@ -217,7 +358,12 @@
                         ></v-text-field>
                       </v-flex>
                     </v-layout>
-                    <v-layout wrap align-center justify-space-around row>
+                    <v-layout
+                      wrap
+                      align-center
+                      justify-space-around
+                      row
+                    >
                       <v-flex xs7>
                         <v-text-field
                           v-model="component.price"
@@ -226,7 +372,12 @@
                         ></v-text-field>
                       </v-flex>
                     </v-layout>
-                    <v-layout wrap align-center justify-space-around row>
+                    <v-layout
+                      wrap
+                      align-center
+                      justify-space-around
+                      row
+                    >
                       <v-flex xs7>
                         <v-text-field
                           v-model="component.warranty"
@@ -235,7 +386,12 @@
                         ></v-text-field>
                       </v-flex>
                     </v-layout>
-                    <v-layout wrap align-center justify-space-around row>
+                    <v-layout
+                      wrap
+                      align-center
+                      justify-space-around
+                      row
+                    >
                       <v-flex xs7>
                         <v-text-field
                           v-model="component.avgLife"
@@ -245,7 +401,12 @@
                       </v-flex>
                     </v-layout>
                     <template v-if="componentType === 0">
-                      <v-layout wrap align-center justify-space-around row>
+                      <v-layout
+                        wrap
+                        align-center
+                        justify-space-around
+                        row
+                      >
                         <v-flex xs7>
                           <v-text-field
                             v-model="component.frequency"
@@ -254,7 +415,12 @@
                           ></v-text-field>
                         </v-flex>
                       </v-layout>
-                      <v-layout wrap align-center justify-space-around row>
+                      <v-layout
+                        wrap
+                        align-center
+                        justify-space-around
+                        row
+                      >
                         <v-flex xs7>
                           <v-text-field
                             v-model="component.socket"
@@ -263,7 +429,12 @@
                           ></v-text-field>
                         </v-flex>
                       </v-layout>
-                      <v-layout wrap align-center justify-space-around row>
+                      <v-layout
+                        wrap
+                        align-center
+                        justify-space-around
+                        row
+                      >
                         <v-flex xs7>
                           <v-text-field
                             v-model="component.core"
@@ -273,8 +444,13 @@
                         </v-flex>
                       </v-layout>
                     </template>
-                    <template v-if="componentType === 1">
-                      <v-layout wrap align-center justify-space-around row>
+                    <template v-if="componentType === 2">
+                      <v-layout
+                        wrap
+                        align-center
+                        justify-space-around
+                        row
+                      >
                         <v-flex xs7>
                           <v-text-field
                             v-model="component.type"
@@ -283,7 +459,12 @@
                           ></v-text-field>
                         </v-flex>
                       </v-layout>
-                      <v-layout wrap align-center justify-space-around row>
+                      <v-layout
+                        wrap
+                        align-center
+                        justify-space-around
+                        row
+                      >
                         <v-flex xs7>
                           <v-text-field
                             v-model="component.socket"
@@ -292,7 +473,12 @@
                           ></v-text-field>
                         </v-flex>
                       </v-layout>
-                      <v-layout wrap align-center justify-space-around row>
+                      <v-layout
+                        wrap
+                        align-center
+                        justify-space-around
+                        row
+                      >
                         <v-flex xs7>
                           <v-text-field
                             v-model="component.chipset"
@@ -301,7 +487,12 @@
                           ></v-text-field>
                         </v-flex>
                       </v-layout>
-                      <v-layout wrap align-center justify-space-around row>
+                      <v-layout
+                        wrap
+                        align-center
+                        justify-space-around
+                        row
+                      >
                         <v-flex xs7>
                           <v-text-field
                             v-model="component.width"
@@ -310,7 +501,12 @@
                           ></v-text-field>
                         </v-flex>
                       </v-layout>
-                      <v-layout wrap align-center justify-space-around row>
+                      <v-layout
+                        wrap
+                        align-center
+                        justify-space-around
+                        row
+                      >
                         <v-flex xs7>
                           <v-text-field
                             v-model="component.height"
@@ -320,8 +516,13 @@
                         </v-flex>
                       </v-layout>
                     </template>
-                    <template v-if="componentType === 2">
-                      <v-layout wrap align-center justify-space-around row>
+                    <template v-if="componentType === 1">
+                      <v-layout
+                        wrap
+                        align-center
+                        justify-space-around
+                        row
+                      >
                         <v-flex xs7>
                           <v-text-field
                             v-model="component.resolution"
@@ -330,7 +531,12 @@
                           ></v-text-field>
                         </v-flex>
                       </v-layout>
-                      <v-layout wrap align-center justify-space-around row>
+                      <v-layout
+                        wrap
+                        align-center
+                        justify-space-around
+                        row
+                      >
                         <v-flex xs7>
                           <v-text-field
                             v-model="component.type"
@@ -339,7 +545,12 @@
                           ></v-text-field>
                         </v-flex>
                       </v-layout>
-                      <v-layout wrap align-center justify-space-around row>
+                      <v-layout
+                        wrap
+                        align-center
+                        justify-space-around
+                        row
+                      >
                         <v-flex xs7>
                           <v-text-field
                             v-model="component.connector"
@@ -348,7 +559,12 @@
                           ></v-text-field>
                         </v-flex>
                       </v-layout>
-                      <v-layout wrap align-center justify-space-around row>
+                      <v-layout
+                        wrap
+                        align-center
+                        justify-space-around
+                        row
+                      >
                         <v-flex xs7>
                           <v-text-field
                             v-model="component.inches"
@@ -359,7 +575,12 @@
                       </v-layout>
                     </template>
                     <template v-if="componentType === 3">
-                      <v-layout wrap align-center justify-space-around row>
+                      <v-layout
+                        wrap
+                        align-center
+                        justify-space-around
+                        row
+                      >
                         <v-flex xs7>
                           <v-text-field
                             v-model="component.connector"
@@ -370,7 +591,12 @@
                       </v-layout>
                     </template>
                     <template v-if="componentType === 4">
-                      <v-layout wrap align-center justify-space-around row>
+                      <v-layout
+                        wrap
+                        align-center
+                        justify-space-around
+                        row
+                      >
                         <v-flex xs7>
                           <v-text-field
                             v-model="component.potency"
@@ -381,7 +607,12 @@
                       </v-layout>
                     </template>
                     <template v-if="componentType === 5">
-                      <v-layout wrap align-center justify-space-around row>
+                      <v-layout
+                        wrap
+                        align-center
+                        justify-space-around
+                        row
+                      >
                         <v-flex xs7>
                           <v-text-field
                             v-model="component.frequency"
@@ -390,7 +621,12 @@
                           ></v-text-field>
                         </v-flex>
                       </v-layout>
-                      <v-layout wrap align-center justify-space-around row>
+                      <v-layout
+                        wrap
+                        align-center
+                        justify-space-around
+                        row
+                      >
                         <v-flex xs7>
                           <v-text-field
                             v-model="component.capacity"
@@ -401,7 +637,12 @@
                       </v-layout>
                     </template>
                     <template v-if="componentType === 6">
-                      <v-layout wrap align-center justify-space-around row>
+                      <v-layout
+                        wrap
+                        align-center
+                        justify-space-around
+                        row
+                      >
                         <v-flex xs7>
                           <v-text-field
                             v-model="component.capacity"
@@ -410,7 +651,12 @@
                           ></v-text-field>
                         </v-flex>
                       </v-layout>
-                      <v-layout wrap align-center justify-space-around row>
+                      <v-layout
+                        wrap
+                        align-center
+                        justify-space-around
+                        row
+                      >
                         <v-flex xs7>
                           <v-text-field
                             v-model="component.type"
@@ -419,7 +665,12 @@
                           ></v-text-field>
                         </v-flex>
                       </v-layout>
-                      <v-layout wrap align-center justify-space-around row>
+                      <v-layout
+                        wrap
+                        align-center
+                        justify-space-around
+                        row
+                      >
                         <v-flex xs7>
                           <v-text-field
                             v-model="component.dimension"
@@ -428,7 +679,12 @@
                           ></v-text-field>
                         </v-flex>
                       </v-layout>
-                      <v-layout wrap align-center justify-space-around row>
+                      <v-layout
+                        wrap
+                        align-center
+                        justify-space-around
+                        row
+                      >
                         <v-flex xs7>
                           <v-text-field
                             v-model="component.latency"
@@ -438,11 +694,23 @@
                         </v-flex>
                       </v-layout>
                     </template>
-                    <v-layout wrap align-center justify-space-around row>
+                    <v-layout
+                      wrap
+                      align-center
+                      justify-space-around
+                      row
+                    >
                       <v-flex>
                         <div class="text-xs-center">
-                          <v-btn color="teal darken-1" flat="flat" @click="cancelarAdd()">Cancelar</v-btn>
-                          <v-btn color="success" @click="addComponent()">Guardar</v-btn>
+                          <v-btn
+                            color="teal darken-1"
+                            flat="flat"
+                            @click="cancelarAdd()"
+                          >Cancelar</v-btn>
+                          <v-btn
+                            color="success"
+                            @click="addComponent()"
+                          >Guardar</v-btn>
                         </div>
                       </v-flex>
                     </v-layout>
@@ -454,11 +722,20 @@
         </v-layout>
       </v-dialog>
     </v-layout>
-    <v-dialog v-model="showComponentDialog" persistent max-width="600px">
+    <v-dialog
+      v-model="showComponentDialog"
+      persistent
+      max-width="600px"
+    >
       <v-layout row>
         <v-flex>
           <v-card>
-            <v-toolbar color="transparent" flat dense card>
+            <v-toolbar
+              color="transparent"
+              flat
+              dense
+              card
+            >
               <v-toolbar-title>
                 <h4>Detalle del componente</h4>
               </v-toolbar-title>
@@ -467,9 +744,14 @@
             </v-toolbar>
             <v-divider></v-divider>
             <v-card-text>
-              <v-form ref="form" lazy-validation>
+              <v-form>
                 <slot name="widget-content">
-                  <v-layout wrap align-center justify-space-around row>
+                  <v-layout
+                    wrap
+                    align-center
+                    justify-space-around
+                    row
+                  >
                     <v-flex xs7>
                       <v-text-field
                         :value="typeName(component.key)"
@@ -478,7 +760,12 @@
                       ></v-text-field>
                     </v-flex>
                   </v-layout>
-                  <v-layout wrap align-center justify-space-around row>
+                  <v-layout
+                    wrap
+                    align-center
+                    justify-space-around
+                    row
+                  >
                     <v-flex xs7>
                       <v-text-field
                         :value="providerName(component.provider_id)"
@@ -487,149 +774,383 @@
                       ></v-text-field>
                     </v-flex>
                   </v-layout>
-                  <v-layout wrap align-center justify-space-around row>
+                  <v-layout
+                    wrap
+                    align-center
+                    justify-space-around
+                    row
+                  >
                     <v-flex xs7>
-                      <v-text-field :value="component.mark" label="Marca" readonly></v-text-field>
+                      <v-text-field
+                        :value="component.mark"
+                        label="Marca"
+                        readonly
+                      ></v-text-field>
                     </v-flex>
                   </v-layout>
-                  <v-layout wrap align-center justify-space-around row>
+                  <v-layout
+                    wrap
+                    align-center
+                    justify-space-around
+                    row
+                  >
                     <v-flex xs7>
-                      <v-text-field :value="component.model" label="Modelo" readonly></v-text-field>
+                      <v-text-field
+                        :value="component.model"
+                        label="Modelo"
+                        readonly
+                      ></v-text-field>
                     </v-flex>
                   </v-layout>
-                  <v-layout wrap align-center justify-space-around row>
+                  <v-layout
+                    wrap
+                    align-center
+                    justify-space-around
+                    row
+                  >
                     <v-flex xs7>
-                      <v-text-field :value="component.price" label="Precio" readonly></v-text-field>
+                      <v-text-field
+                        :value="component.price"
+                        label="Precio"
+                        readonly
+                      ></v-text-field>
                     </v-flex>
                   </v-layout>
-                  <v-layout wrap align-center justify-space-around row>
+                  <v-layout
+                    wrap
+                    align-center
+                    justify-space-around
+                    row
+                  >
                     <v-flex xs7>
-                      <v-text-field :value="component.warranty" label="Garantía" readonly></v-text-field>
+                      <v-text-field
+                        :value="component.warranty"
+                        label="Garantía"
+                        readonly
+                      ></v-text-field>
                     </v-flex>
                   </v-layout>
-                  <v-layout wrap align-center justify-space-around row>
+                  <v-layout
+                    wrap
+                    align-center
+                    justify-space-around
+                    row
+                  >
                     <v-flex xs7>
-                      <v-text-field :value="component.avgLife" label="Vida útil" readonly></v-text-field>
+                      <v-text-field
+                        :value="component.avgLife"
+                        label="Vida útil"
+                        readonly
+                      ></v-text-field>
                     </v-flex>
                   </v-layout>
                   <template v-if="component.key === 0">
-                    <v-layout wrap align-center justify-space-around row>
+                    <v-layout
+                      wrap
+                      align-center
+                      justify-space-around
+                      row
+                    >
                       <v-flex xs7>
-                        <v-text-field :value="component.frequency" label="Frecuencia" readonly></v-text-field>
+                        <v-text-field
+                          :value="component.frequency"
+                          label="Frecuencia"
+                          readonly
+                        ></v-text-field>
                       </v-flex>
                     </v-layout>
-                    <v-layout wrap align-center justify-space-around row>
+                    <v-layout
+                      wrap
+                      align-center
+                      justify-space-around
+                      row
+                    >
                       <v-flex xs7>
-                        <v-text-field :value="component.socket" label="Socket" readonly></v-text-field>
+                        <v-text-field
+                          :value="component.socket"
+                          label="Socket"
+                          readonly
+                        ></v-text-field>
                       </v-flex>
                     </v-layout>
-                    <v-layout wrap align-center justify-space-around row>
+                    <v-layout
+                      wrap
+                      align-center
+                      justify-space-around
+                      row
+                    >
                       <v-flex xs7>
-                        <v-text-field :value="component.core" label="Núcleos" readonly></v-text-field>
+                        <v-text-field
+                          :value="component.core"
+                          label="Núcleos"
+                          readonly
+                        ></v-text-field>
                       </v-flex>
                     </v-layout>
                   </template>
                   <template v-if="component.key === 1">
-                    <v-layout wrap align-center justify-space-around row>
+                    <v-layout
+                      wrap
+                      align-center
+                      justify-space-around
+                      row
+                    >
                       <v-flex xs7>
-                        <v-text-field :value="component.type" label="Tipo" readonly></v-text-field>
+                        <v-text-field
+                          :value="component.type"
+                          label="Tipo"
+                          readonly
+                        ></v-text-field>
                       </v-flex>
                     </v-layout>
-                    <v-layout wrap align-center justify-space-around row>
+                    <v-layout
+                      wrap
+                      align-center
+                      justify-space-around
+                      row
+                    >
                       <v-flex xs7>
-                        <v-text-field :value="component.socket" label="Socket" readonly></v-text-field>
+                        <v-text-field
+                          :value="component.socket"
+                          label="Socket"
+                          readonly
+                        ></v-text-field>
                       </v-flex>
                     </v-layout>
-                    <v-layout wrap align-center justify-space-around row>
+                    <v-layout
+                      wrap
+                      align-center
+                      justify-space-around
+                      row
+                    >
                       <v-flex xs7>
-                        <v-text-field :value="component.chipset" label="Chipset" readonly></v-text-field>
+                        <v-text-field
+                          :value="component.chipset"
+                          label="Chipset"
+                          readonly
+                        ></v-text-field>
                       </v-flex>
                     </v-layout>
-                    <v-layout wrap align-center justify-space-around row>
+                    <v-layout
+                      wrap
+                      align-center
+                      justify-space-around
+                      row
+                    >
                       <v-flex xs7>
-                        <v-text-field :value="component.width" label="Ancho" readonly></v-text-field>
+                        <v-text-field
+                          :value="component.width"
+                          label="Ancho"
+                          readonly
+                        ></v-text-field>
                       </v-flex>
                     </v-layout>
-                    <v-layout wrap align-center justify-space-around row>
+                    <v-layout
+                      wrap
+                      align-center
+                      justify-space-around
+                      row
+                    >
                       <v-flex xs7>
-                        <v-text-field :value="component.height" label="Alto" readonly></v-text-field>
+                        <v-text-field
+                          :value="component.height"
+                          label="Alto"
+                          readonly
+                        ></v-text-field>
                       </v-flex>
                     </v-layout>
                   </template>
                   <template v-if="component.key === 2">
-                    <v-layout wrap align-center justify-space-around row>
+                    <v-layout
+                      wrap
+                      align-center
+                      justify-space-around
+                      row
+                    >
                       <v-flex xs7>
-                        <v-text-field :value="component.resolution" label="Resolución" readonly></v-text-field>
+                        <v-text-field
+                          :value="component.resolution"
+                          label="Resolución"
+                          readonly
+                        ></v-text-field>
                       </v-flex>
                     </v-layout>
-                    <v-layout wrap align-center justify-space-around row>
+                    <v-layout
+                      wrap
+                      align-center
+                      justify-space-around
+                      row
+                    >
                       <v-flex xs7>
-                        <v-text-field :value="component.type" label="Tipo pantalla" readonly></v-text-field>
+                        <v-text-field
+                          :value="component.type"
+                          label="Tipo pantalla"
+                          readonly
+                        ></v-text-field>
                       </v-flex>
                     </v-layout>
-                    <v-layout wrap align-center justify-space-around row>
+                    <v-layout
+                      wrap
+                      align-center
+                      justify-space-around
+                      row
+                    >
                       <v-flex xs7>
-                        <v-text-field :value="component.connector" label="Conector" readonly></v-text-field>
+                        <v-text-field
+                          :value="component.connector"
+                          label="Conector"
+                          readonly
+                        ></v-text-field>
                       </v-flex>
                     </v-layout>
-                    <v-layout wrap align-center justify-space-around row>
+                    <v-layout
+                      wrap
+                      align-center
+                      justify-space-around
+                      row
+                    >
                       <v-flex xs7>
-                        <v-text-field :value="component.inches" label="Pulgadas" readonly></v-text-field>
+                        <v-text-field
+                          :value="component.inches"
+                          label="Pulgadas"
+                          readonly
+                        ></v-text-field>
                       </v-flex>
                     </v-layout>
                   </template>
                   <template v-if="component.key === 3">
-                    <v-layout wrap align-center justify-space-around row>
+                    <v-layout
+                      wrap
+                      align-center
+                      justify-space-around
+                      row
+                    >
                       <v-flex xs7>
-                        <v-text-field :value="component.connector" label="Conector" readonly></v-text-field>
+                        <v-text-field
+                          :value="component.connector"
+                          label="Conector"
+                          readonly
+                        ></v-text-field>
                       </v-flex>
                     </v-layout>
                   </template>
                   <template v-if="component.key === 4">
-                    <v-layout wrap align-center justify-space-around row>
+                    <v-layout
+                      wrap
+                      align-center
+                      justify-space-around
+                      row
+                    >
                       <v-flex xs7>
-                        <v-text-field :value="component.potency" label="Potencia" readonly></v-text-field>
+                        <v-text-field
+                          :value="component.potency"
+                          label="Potencia"
+                          readonly
+                        ></v-text-field>
                       </v-flex>
                     </v-layout>
                   </template>
                   <template v-if="component.key === 5">
-                    <v-layout wrap align-center justify-space-around row>
+                    <v-layout
+                      wrap
+                      align-center
+                      justify-space-around
+                      row
+                    >
                       <v-flex xs7>
-                        <v-text-field :value="component.frequency" label="Frecuencia" readonly></v-text-field>
+                        <v-text-field
+                          :value="component.frequency"
+                          label="Frecuencia"
+                          readonly
+                        ></v-text-field>
                       </v-flex>
                     </v-layout>
-                    <v-layout wrap align-center justify-space-around row>
+                    <v-layout
+                      wrap
+                      align-center
+                      justify-space-around
+                      row
+                    >
                       <v-flex xs7>
-                        <v-text-field :value="component.capacity" label="Capacidad" readonly></v-text-field>
+                        <v-text-field
+                          :value="component.capacity"
+                          label="Capacidad"
+                          readonly
+                        ></v-text-field>
                       </v-flex>
                     </v-layout>
                   </template>
                   <template v-if="component.key === 6">
-                    <v-layout wrap align-center justify-space-around row>
+                    <v-layout
+                      wrap
+                      align-center
+                      justify-space-around
+                      row
+                    >
                       <v-flex xs7>
-                        <v-text-field :value="component.capacity" label="Capacidad" readonly></v-text-field>
+                        <v-text-field
+                          :value="component.capacity"
+                          label="Capacidad"
+                          readonly
+                        ></v-text-field>
                       </v-flex>
                     </v-layout>
-                    <v-layout wrap align-center justify-space-around row>
+                    <v-layout
+                      wrap
+                      align-center
+                      justify-space-around
+                      row
+                    >
                       <v-flex xs7>
-                        <v-text-field :value="component.type" label="Tipo" readonly></v-text-field>
+                        <v-text-field
+                          :value="component.type"
+                          label="Tipo"
+                          readonly
+                        ></v-text-field>
                       </v-flex>
                     </v-layout>
-                    <v-layout wrap align-center justify-space-around row>
+                    <v-layout
+                      wrap
+                      align-center
+                      justify-space-around
+                      row
+                    >
                       <v-flex xs7>
-                        <v-text-field :value="component.dimension" label="Dimensión" readonly></v-text-field>
+                        <v-text-field
+                          :value="component.dimension"
+                          label="Dimensión"
+                          readonly
+                        ></v-text-field>
                       </v-flex>
                     </v-layout>
-                    <v-layout wrap align-center justify-space-around row>
+                    <v-layout
+                      wrap
+                      align-center
+                      justify-space-around
+                      row
+                    >
                       <v-flex xs7>
-                        <v-text-field :value="component.latency" label="Latencia" readonly></v-text-field>
+                        <v-text-field
+                          :value="component.latency"
+                          label="Latencia"
+                          readonly
+                        ></v-text-field>
                       </v-flex>
                     </v-layout>
                   </template>
-                  <v-layout wrap align-center justify-space-around row>
+                  <v-layout
+                    wrap
+                    align-center
+                    justify-space-around
+                    row
+                  >
                     <v-flex>
                       <div class="text-xs-center">
-                        <v-btn color="teal darken-1" flat="flat" @click="hideComponent()">Cerrar</v-btn>
+                        <v-btn
+                          color="teal darken-1"
+                          flat="flat"
+                          @click="hideComponent()"
+                        >Cerrar</v-btn>
                       </div>
                     </v-flex>
                   </v-layout>
@@ -640,16 +1161,28 @@
         </v-flex>
       </v-layout>
     </v-dialog>
-    <v-dialog v-model="removeComponentDialog" max-width="290" return-value="true">
+    <v-dialog
+      v-model="removeComponentDialog"
+      max-width="290"
+      return-value="true"
+    >
       <v-card>
         <v-card-text>¿Está seguro que desea eliminar el componente?</v-card-text>
 
         <v-card-actions>
           <v-spacer></v-spacer>
 
-          <v-btn color="teal darken-1" flat="flat" @click="removeComponentDialog = false">Cancelar</v-btn>
+          <v-btn
+            color="teal darken-1"
+            flat="flat"
+            @click="removeComponentDialog = false"
+          >Cancelar</v-btn>
 
-          <v-btn color="teal darken-1" flat="flat" @click="removedComponent()">Confirmar</v-btn>
+          <v-btn
+            color="teal darken-1"
+            flat="flat"
+            @click="removedComponent()"
+          >Confirmar</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -731,6 +1264,7 @@ export default {
         this.equipe.components.push(this.component);
         this.component = {};
         this.addComponentDialog = false;
+        this.$refs.form.resetValidation();
       }
     },
     removedComponent() {
@@ -759,7 +1293,8 @@ export default {
       this.showComponentDialog = false;
     },
     async save() {
-      const response = await this.service.addequipe(this.equipe);
+      this.equipe.dateEntry = new Date();
+      const response = await this.equipeService.addEquipe(this.equipe);
       if (_.some(response.data.errors)) {
         this.errors = response.data.errors;
         this.alert = true;
@@ -804,6 +1339,12 @@ export default {
       });
 
       this.componentType = this.componentTypes[0].key;
+    },
+    "equipe.components"() {
+      const res =
+        _.sumBy(this.equipe.components, c => Number(c.avgLife)) /
+        _.size(this.equipe.components);
+      this.equipe.avgLife = res ? res : 0;
     }
   },
   filters: {

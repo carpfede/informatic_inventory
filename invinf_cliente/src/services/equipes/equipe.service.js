@@ -15,7 +15,13 @@ class equipeService {
 
     // GET
     async findAll() {
+        const resAreas = await this.axios.get(`${this.baseUrl}areas/findAll`, { headers: this.token });
+        const areas = resAreas.data.area;
         const response = await this.axios.get(`${this.baseUrl}equipes/findAll`, { headers: this.token });
+        this.lodash.forEach(response.data.equipes, e => {
+            e.areaName = this.lodash.find(areas, a => a._id === e.area).name
+        });
+        console.log(response);
         return response;
     }
 
@@ -40,7 +46,7 @@ class equipeService {
     }
     //POST
     async addEquipe(equipe) {
-        const response = await this.axios.post(`${this.baseUrl}equipes/create`, { headers: this.token });
+        const response = await this.axios.post(`${this.baseUrl}equipes/create`, equipe, { headers: this.token });
         return response;
     }
 

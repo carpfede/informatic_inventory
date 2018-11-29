@@ -210,7 +210,7 @@ export default {
     toDate(value) {
       var date = new Date(value);
       date.setDate(date.getDate() + 1);
-      return date ? "" : date.toLocaleDateString("es");
+      return date && date != 'Invalid Date' ? date.toLocaleDateString("es") : "";
     }
   }
 };

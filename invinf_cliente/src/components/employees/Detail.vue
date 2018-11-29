@@ -106,9 +106,9 @@ export default {
   },
   filters: {
     toDate(value) {
-      let date = new Date(value);
+      var date = new Date(value);
       date.setDate(date.getDate() + 1);
-      return date.toLocaleDateString("es");
+      return date && date != 'Invalid Date' ? date.toLocaleDateString("es") : "";
     }
   }
 };
